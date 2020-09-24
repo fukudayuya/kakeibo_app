@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<script src="https://code.jquery.com/jquery-3.0.0.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
+<script src="/js/sampleJs.js" th:src="@{/js/account.js}"></script>
+<link rel="stylesheet" th:href="@{/css/accountcheck.css}">
+<link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/jquery.ui/1.12.1/themes/Start/jquery-ui.css">
+<title>ユーザー新規登録確認</title>
+</head>
+<body>
+	<header id="header">
+		<h1>新規登録確認画面</h1>
+	</header>
+
+	<div id="formArea">
+	<form th:action="@{/account/finish}" th:object="${accountForm}" method="post">
+		<div id="formvalue">
+			ユーザー名:<span th:text="${session.accountForm.name}" id="name"></span>
+					 <input type="hidden" name="name" th:value="${session.accountForm.name}">
+		</div>
+		<div id="formvalue">
+			メールアドレス:<span th:text="${session.accountForm.email}" id="email"></span>
+						<input type="hidden" name="email" th:value="${session.accountForm.email}">
+		</div>
+		<div id="formvalue">
+			パスワード:<span th:text="${session.accountForm.password}" id="password"></span>
+					 <input type="hidden" name="password" th:value="${session.accountForm.password}">
+		</div>
+		<div>
+			<input type="button" th:value="戻る" onclick="history.back()"/>
+			<input type="submit" th:value="登録" class="submit"/>
+		</div>
+	</form>
+	</div>
+</body>
+</html>

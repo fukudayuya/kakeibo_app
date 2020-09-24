@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<script src="https://code.jquery.com/jquery-3.0.0.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.min.js"></script>
+<script th:src="@{/js/spendDetails.js}"></script>
+<script src="https://rawgit.com/jquery/jquery-ui/master/ui/i18n/datepicker-ja.js"></script>
+<link rel="stylesheet" th:href="@{/css/spendDetails.css}">
+<link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/jquery.ui/1.12.1/themes/Start/jquery-ui.css">
+<link href="https://fonts.googleapis.com/css?family=M+PLUS+1p" rel="stylesheet"><!-- タイトルフォントcss -->
+<title>支出詳細画面</title>
+</head>
+<body>
+<header id="header">
+	<h1 id="titlename">支出詳細画面</h1>
+	<span id = "inlineblock">
+		<button onclick="location.href='/top/'">TOP</button>
+		<button onclick="location.href='/login/logout'">ログアウト</button>
+	</span>
+</header>
+
+<div class="main">
+<div class="box">
+	<form th:action="@{/spend/details}" th:object="${FindSpendDateForm}">
+		<span id="year"></span><span id="month"></span><input type="submit" value="検索">
+	</form>
+	<div id="tabs">
+		<ul class="tab">
+			<li><a th:href="@{#food}" class="link">食費</a></li>
+			<li><a th:href="@{#water}" class="link">水道</a></li>
+			<li><a th:href="@{#electriccity}" class="link">電気</a></li>
+			<li><a th:href="@{#gas}" class="link">ガス</a></li>
+			<li><a th:href="@{#necessities}" class="link">日用品</a></li>
+			<li><a th:href="@{#trafic}" class="link">交通費</a></li>
+			<li><a th:href="@{#entertainment}" class="link">交際費</a></li>
+			<li><a th:href="@{#beauty}" class="link">衣服・美容</a></li>
+			<li><a th:href="@{#health}" class="link">健康・医療</a></li>
+			<li><a th:href="@{#vehicle}" class="link">車・バイク</a></li>
+			<li><a th:href="@{#education}" class="link">教養・教育</a></li>
+			<li><a th:href="@{#hobby}" class="link">趣味・娯楽</a></li>
+			<li><a th:href="@{#house}" class="link">住宅</a></li>
+			<li><a th:href="@{#communication}" class="link">通信</a></li>
+			<li><a th:href="@{#tax}" class="link">税・社会保険</a></li>
+			<li><a th:href="@{#insurance}" class="link">保険</a></li>
+			<li><a th:href="@{#other}" class="link">その他</a></li>
+		</ul>
+
+
+	<div class="tabContents " id="food">
+		<h3>食費</h3>
+		<table border="1">
+			<tr>
+				<th>日付</th>
+				<th>題目</th>
+				<th>金額</th>
+				<th>内容</th>
+				<th>編集</th>
+				<th>削除</th>
+			</tr>
+			<tr th:each="spendfood : ${foodSpendList}" th:object="${spendfood}" class="spenddata">
+				<td><span th:text="*{spenddate}"></span></td>
+				<td><span th:text="*{title}"></span></td>
+				<td><span th:text="*{price}" class="price"></span>円</td>
+				<td><span th:text="*{contents}"></span></td>
+				<td>
+					<form th:action="@{/spend/edit/{spendid}(spendid=*{spendid})}">
+						<input type="submit" th:value="編集" class="edit"/>
+					</form>
+				</td>
+				<td>
+					<form th:action="@{/spend/deletecomplete/{spendid}(spendid=*{spendid})}">
+						<input type="submit" th:value="削除" class="delete"/>
+					</form>
+				</td>
+			</tr>
+		</table>
+		<div>食費合計金額:<span id= "totalPrice">0</span>円</div>
+	</div>
+
+	<div class="tabContents" id="water">
+		<h3>水道</h3>
+			<table border="1">
+				<tr>
+					<th>日付</th>
+					<th>題目</th>
+					<th>金額</th>
+					<th>内容</th>
+					<th>編集</th>
+					<th>削除</th>
+				</tr>
+				<tr th:each="spendwater : ${waterSpendList}" th:object="${spendwater}">
+					<td><span th:text="*{spenddate}"></span></td>
+					<td><span th:text="*{title}"></span></td>
+					<td><span th:text="*{price}" class="price"></span>円</td>
+					<td><span th:text="*{contents}"></span></td>
+					<td>
+						<form th:action="@{/spend/edit/{spendid}(spendid=*{spendid})}">
+							<input type="submit" th:value="編集" class="edit"/>
+						</form>
+					</td>
+					<td>
+						<form th:action="@{/spend/deletecomplete/{spendid}(spendid=*{spendid})}">
+							<input type="submit" th:value="削除" class="delete"/>
+						</form>
+					</td>
+				</tr>
+			</table>
+			<div>水道合計金額:<span id= "totalPrice">0</span>円</div>
+	</div>
+	<div class="tabContents" id="electriccity">
+		<h3>電気</h3>
+		<table border="1">
+			<tr>
+				<th>日付</th>
+				<th>題目</th>
+				<th>金額</th>
+				<th>内容</th>
+				<th>編集</th>
+				<th>削除</th>
+			</tr>
+			<tr th:each="spendelectricity : ${electricitySpendList}" th:object="${spendelectricity}">
+					<td><span th:text="*{spenddate}"></span></td>
+					<td><span th:text="*{title}"></span></td>
+					<td><span th:text="*{price}" class="price"></span>円</td>
+					<td><span th:text="*{contents}"></span></td>
+					<td>
+						<form th:action="@{/spend/edit/{spendid}(spendid=*{spendid})}">
+							<input type="submit" th:value="編集" class="edit"/>
+						</form>
+					</td>
+					<td>
+						<form th:action="@{/spend/deletecomplete/{spendid}(spendid=*{spendid})}">
+							<input type="submit" th:value="削除" class="delete"/>
+						</form>
+					</td>
+				</tr>
+		</table>
+		<div>電気合計金額:<span id= "totalPrice">0</span>円</div>
+	</div>
+	<div class="tabContents" id="gas">
+		<h3>ガス</h3>
+		<table border="1">
+			<tr>
+				<th>日付</th>
+				<th>題目</th>
+				<th>金額</th>
+				<th>内容</th>
+				<th>編集</th>
+				<th>削除</th>
+			</tr>
+			<tr th:each="spendgas : ${gasSpendList}" th:object="${spendgas}">
+					<td><span th:text="*{spenddate}"></span></td>
+					<td><span th:text="*{title}"></span></td>
+					<td><span th:text="*{price}" class="price"></span>円</td>
+					<td><span th:text="*{contents}"></span></td>
+					<td>
+						<form th:action="@{/spend/edit/{spendid}(spendid=*{spendid})}">
+							<input type="submit" th:value="編集" class="edit"/>
+						</form>
+					</td>
+					<td>
+						<form th:action="@{/spend/deletecomplete/{spendid}(spendid=*{spendid})}">
+							<input type="submit" th:value="削除" class="delete"/>
+						</form>
+					</td>
+				</tr>
+		</table>
+		<div>ガス合計金額:<span id= "totalPrice">0</span>円</div>
+	</div>
+	<div class="tabContents" id="necessities">
+		<h3>日用品</h3>
+		<table border="1">
+			<tr>
+				<th>日付</th>
+				<th>題目</th>
+				<th>金額</th>
+				<th>内容</th>
+				<th>編集</th>
+				<th>削除</th>
+			</tr>
+			<tr th:each="spendnecessities : ${necessitiesSpendList}" th:object="${spendnecessities}">
+					<td><span th:text="*{spenddate}"></span></td>
+					<td><span th:text="*{title}"></span></td>
+					<td><span th:text="*{price}" class="price"></span>円</td>
+					<td><span th:text="*{contents}"></span></td>
+					<td>
+						<form th:action="@{/spend/edit/{spendid}(spendid=*{spendid})}">
+							<input type="submit" th:value="編集" class="edit"/>
+						</form>
+					</td>
+					<td>
+						<form th:action="@{/spend/deletecomplete/{spendid}(spendid=*{spendid})}">
+							<input type="submit" th:value="削除" class="delete"/>
+						</form>
+					</td>
+				</tr>
+		</table>
+		<div>日用品合計金額:<span id= "totalPrice">0</span>円</div>
+	</div>
+	<div class="tabContents" id="trafic">
+		<h3>交通</h3>
+		<table border="1">
+			<tr>
+				<th>日付</th>
+				<th>題目</th>
+				<th>金額</th>
+				<th>内容</th>
+				<th>編集</th>
+				<th>削除</th>
+			</tr>
+			<tr th:each="spendtrafic : ${traficSpendList}" th:object="${spendtrafic}">
+					<td><span th:text="*{spenddate}"></span></td>
+					<td><span th:text="*{title}"></span></td>
+					<td><span th:text="*{price}" class="price"></span>円</td>
+					<td><span th:text="*{contents}"></span></td>
+					<td>
+						<form th:action="@{/spend/edit/{spendid}(spendid=*{spendid})}">
+							<input type="submit" th:value="編集" class="edit"/>
+						</form>
+					</td>
+					<td>
+						<form th:action="@{/spend/deletecomplete/{spendid}(spendid=*{spendid})}">
+							<input type="submit" th:value="削除" class="delete"/>
+						</form>
+					</td>
+				</tr>
+		</table>
+		<div>交通費合計金額:<span id= "totalPrice">0</span>円</div>
+	</div>
+	<div class="tabContents" id="entertainment">
+		<h3>交際</h3>
+		<table border="1">
+			<tr>
+				<th>日付</th>
+				<th>題目</th>
+				<th>金額</th>
+				<th>内容</th>
+				<th>編集</th>
+				<th>削除</th>
+			</tr>
+			<tr th:each="spendentertainment : ${entertainmentSpendList}" th:object="${spendentertainment}">
+					<td><span th:text="*{spenddate}"></span></td>
+					<td><span th:text="*{title}"></span></td>
+					<td><span th:text="*{price}" class="price"></span>円</td>
+					<td><span th:text="*{contents}"></span></td>
+					<td>
+						<form th:action="@{/spend/edit/{spendid}(spendid=*{spendid})}">
+							<input type="submit" th:value="編集" class="edit"/>
+						</form>
+					</td>
+					<td>
+						<form th:action="@{/spend/deletecomplete/{spendid}(spendid=*{spendid})}">
+							<input type="submit" th:value="削除" class="delete"/>
+						</form>
+					</td>
+				</tr>
+		</table>
+		<div>交際合計金額:<span id= "totalPrice">0</span>円</div>
+	</div>
+	<div class="tabContents" id="beauty">
+		<h3>衣服・美容</h3>
+		<table border="1">
+			<tr>
+				<th>日付</th>
+				<th>題目</th>
+				<th>金額</th>
+				<th>内容</th>
+				<th>編集</th>
+				<th>削除</th>
+			</tr>
+			<tr th:each="spendbeauty : ${beautySpendList}" th:object="${spendbeauty}">
+					<td><span th:text="*{spenddate}"></span></td>
+					<td><span th:text="*{title}"></span></td>
+					<td><span th:text="*{price}" class="price"></span>円</td>
+					<td><span th:text="*{contents}"></span></td>
+					<td>
+						<form th:action="@{/spend/edit/{spendid}(spendid=*{spendid})}">
+							<input type="submit" th:value="編集" class="edit"/>
+						</form>
+					</td>
+					<td>
+						<form th:action="@{/spend/deletecomplete/{spendid}(spendid=*{spendid})}">
+							<input type="submit" th:value="削除" class="delete"/>
+						</form>
+					</td>
+				</tr>
+		</table>
+		<div>衣服・美容合計金額:<span id= "totalPrice">0</span>円</div>
+	</div>
+	<div class="tabContents" id="health">
+		<h3>健康・医療</h3>
+		<table border="1">
+			<tr>
+				<th>日付</th>
+				<th>題目</th>
+				<th>金額</th>
+				<th>内容</th>
+				<th>編集</th>
+				<th>削除</th>
+			</tr>
+			<tr th:each="spendhealth : ${healthSpendList}" th:object="${spendhealth}">
+				<td><span th:text="*{spenddate}"></span></td>
+				<td><span th:text="*{title}"></span></td>
+				<td><span th:text="*{price}" class="price"></span>円</td>
+				<td><span th:text="*{contents}"></span></td>
+				<td>
+					<form th:action="@{/spend/edit/{spendid}(spendid=*{spendid})}">
+						<input type="submit" th:value="編集" class="edit"/>
+					</form>
+				</td>
+				<td>
+					<form th:action="@{/spend/deletecomplete/{spendid}(spendid=*{spendid})}">
+						<input type="submit" th:value="削除" class="delete"/>
+					</form>
+				</td>
+			</tr>
+		</table>
+		<div>健康・医療合計金額:<span id= "totalPrice">0</span>円</div>
+	</div>
+	<div class="tabContents" id="vehicle">
+		<h3>車・バイク</h3>
+		<table border="1">
+			<tr>
+				<th>日付</th>
+				<th>題目</th>
+				<th>金額</th>
+				<th>内容</th>
+				<th>編集</th>
+				<th>削除</th>
+			</tr>
+			<tr th:each="spendvehicle : ${vehicleSpendList}" th:object="${spendvehicle}">
+				<td><span th:text="*{spenddate}"></span></td>
+				<td><span th:text="*{title}"></span></td>
+				<td><span th:text="*{price}" class="price"></span>円</td>
+				<td><span th:text="*{contents}"></span></td>
+				<td>
+					<form th:action="@{/spend/edit/{spendid}(spendid=*{spendid})}">
+						<input type="submit" th:value="編集" class="edit"/>
+					</form>
+				</td>
+				<td>
+					<form th:action="@{/spend/deletecomplete/{spendid}(spendid=*{spendid})}">
+						<input type="submit" th:value="削除" class="delete"/>
+					</form>
+				</td>
+			</tr>
+		</table>
+		<div>車・バイク合計金額:<span id= "totalPrice">0</span>円</div>
+	</div>
+	<div class="tabContents" id="education">
+		<h3>教養・教育</h3>
+		<table border="1">
+			<tr>
+				<th>日付</th>
+				<th>題目</th>
+				<th>金額</th>
+				<th>内容</th>
+				<th>編集</th>
+				<th>削除</th>
+			</tr>
+			<tr th:each="spendeducation : ${educationSpendList}" th:object="${spendeducation}">
+				<td><span th:text="*{spenddate}"></span></td>
+				<td><span th:text="*{title}"></span></td>
+				<td><span th:text="*{price}" class="price"></span>円</td>
+				<td><span th:text="*{contents}"></span></td>
+				<td>
+					<form th:action="@{/spend/edit/{spendid}(spendid=*{spendid})}">
+						<input type="submit" th:value="編集" class="edit"/>
+					</form>
+				</td>
+				<td>
+					<form th:action="@{/spend/deletecomplete/{spendid}(spendid=*{spendid})}">
+						<input type="submit" th:value="削除" class="delete"/>
+					</form>
+				</td>
+			</tr>
+		</table>
+		<div>教養・教育合計金額:<span id= "totalPrice">0</span>円</div>
+	</div>
+	<div class="tabContents" id="hobby">
+		<h3>趣味・娯楽</h3>
+		<table border="1">
+			<tr>
+				<th>日付</th>
+				<th>題目</th>
+				<th>金額</th>
+				<th>内容</th>
+				<th>編集</th>
+				<th>削除</th>
+			</tr>
+			<tr th:each="spendhobby : ${hobbySpendList}" th:object="${spendhobby}">
+				<td><span th:text="*{spenddate}"></span></td>
+				<td><span th:text="*{title}"></span></td>
+				<td><span th:text="*{price}" class="price"></span>円</td>
+				<td><span th:text="*{contents}"></span></td>
+				<td>
+					<form th:action="@{/spend/edit/{spendid}(spendid=*{spendid})}">
+						<input type="submit" th:value="編集" class="edit"/>
+					</form>
+				</td>
+				<td>
+					<form th:action="@{/spend/deletecomplete/{spendid}(spendid=*{spendid})}">
+						<input type="submit" th:value="削除" class="delete"/>
+					</form>
+				</td>
+			</tr>
+		</table>
+		<div>趣味・娯楽合計金額:<span id= "totalPrice">0</span>円</div>
+	</div>
+	<div class="tabContents" id="house">
+		<h3>住宅</h3>
+		<table border="1">
+			<tr>
+				<th>日付</th>
+				<th>題目</th>
+				<th>金額</th>
+				<th>内容</th>
+				<th>編集</th>
+				<th>削除</th>
+			</tr>
+			<tr th:each="spendhouse : ${houseSpendList}" th:object="${spendhouse}">
+				<td><span th:text="*{spenddate}"></span></td>
+				<td><span th:text="*{title}"></span></td>
+				<td><span th:text="*{price}" class="price"></span>円</td>
+				<td><span th:text="*{contents}"></span></td>
+				<td>
+					<form th:action="@{/spend/edit/{spendid}(spendid=*{spendid})}">
+						<input type="submit" th:value="編集" class="edit"/>
+					</form>
+				</td>
+				<td>
+					<form th:action="@{/spend/deletecomplete/{spendid}(spendid=*{spendid})}">
+						<input type="submit" th:value="削除" class="delete"/>
+					</form>
+				</td>
+			</tr>
+		</table>
+		<div>住宅合計金額:<span id= "totalPrice">0</span>円</div>
+	</div>
+	<div class="tabContents" id="communication">
+		<h3>通信</h3>
+		<table border="1">
+			<tr>
+				<th>日付</th>
+				<th class="thtitle">題目</th>
+				<th>金額</th>
+				<th>内容</th>
+				<th>編集</th>
+				<th>削除</th>
+			</tr>
+			<tr th:each="spendcommunication : ${communicationSpendList}" th:object="${spendcommunication}">
+				<td><span th:text="*{spenddate}"></span></td>
+				<td><span th:text="*{title}"></span></td>
+				<td><span th:text="*{price}" class="price"></span>円</td>
+				<td><span th:text="*{contents}"></span></td>
+				<td>
+					<form th:action="@{/spend/edit/{spendid}(spendid=*{spendid})}">
+						<input type="submit" th:value="編集" class="edit"/>
+					</form>
+				</td>
+				<td>
+					<form th:action="@{/spend/deletecomplete/{spendid}(spendid=*{spendid})}">
+						<input type="submit" th:value="削除" class="delete"/>
+					</form>
+				</td>
+			</tr>
+		</table>
+		<div>通信合計金額:<span id= "totalPrice">0</span>円</div>
+	</div>
+	<div class="tabContents" id="tax">
+		<h3>税・社会保険</h3>
+		<table border="1">
+			<tr>
+				<th>日付</th>
+				<th>題目</th>
+				<th>金額</th>
+				<th>内容</th>
+				<th>編集</th>
+				<th>削除</th>
+			</tr>
+			<tr th:each="spendtax : ${taxSpendList}" th:object="${spendtax}">
+				<td><span th:text="*{spenddate}"></span></td>
+				<td><span th:text="*{title}"></span></td>
+				<td><span th:text="*{price}" class="price"></span>円</td>
+				<td><span th:text="*{contents}"></span></td>
+				<td>
+					<form th:action="@{/spend/edit/{spendid}(spendid=*{spendid})}">
+						<input type="submit" th:value="編集" class="edit"/>
+					</form>
+				</td>
+				<td>
+					<form th:action="@{/spend/deletecomplete/{spendid}(spendid=*{spendid})}">
+						<input type="submit" th:value="削除" class="delete"/>
+					</form>
+				</td>
+			</tr>
+		</table>
+		<div>税・社会保険合計金額:<span id= "totalPrice">0</span>円</div>
+	</div>
+	<div class="tabContents" id="insurance">
+		<h3>保険</h3>
+		<table border="1">
+			<tr>
+				<th>日付</th>
+				<th>題目</th>
+				<th>金額</th>
+				<th>内容</th>
+				<th>編集</th>
+				<th>削除</th>
+			</tr>
+			<tr th:each="spendinsurance : ${insuranceSpendList}" th:object="${spendinsurance}">
+				<td><span th:text="*{spenddate}"></span></td>
+				<td><span th:text="*{title}"></span></td>
+				<td><span th:text="*{price}" class="price"></span>円</td>
+				<td><span th:text="*{contents}"></span></td>
+				<td>
+					<form th:action="@{/spend/edit/{spendid}(spendid=*{spendid})}">
+						<input type="submit" th:value="編集" class="edit"/>
+					</form>
+				</td>
+				<td>
+					<form th:action="@{/spend/deletecomplete/{spendid}(spendid=*{spendid})}">
+						<input type="submit" th:value="削除" class="delete"/>
+					</form>
+				</td>
+			</tr>
+		</table>
+		<div>保険合計金額:<span id= "totalPrice">0</span>円</div>
+	</div>
+	<div class="tabContents" id="other">
+		<h3>その他</h3>
+		<table border="1">
+			<tr>
+				<th>日付</th>
+				<th>題目</th>
+				<th>金額</th>
+				<th>内容</th>
+				<th>編集</th>
+				<th>削除</th>
+			</tr>
+			<tr th:each="spendother : ${otherSpendList}" th:object="${spendother}">
+				<td><span th:text="*{spenddate}"></span></td>
+				<td><span th:text="*{title}"></span></td>
+				<td><span th:text="*{price}" class="price"></span>円</td>
+				<td><span th:text="*{contents}"></span></td>
+				<td>
+					<form th:action="@{/spend/edit/{spendid}(spendid=*{spendid})}">
+						<input type="submit" th:value="編集" class="edit"/>
+					</form>
+				</td>
+				<td>
+					<form th:action="@{/spend/deletecomplete/{spendid}(spendid=*{spendid})}">
+						<input type="submit" th:value="削除" class="delete"/>
+					</form>
+				</td>
+			</tr>
+		</table>
+		<div>その他合計金額:<span id= "totalPrice">0</span>円</div>
+	</div>
+	</div>
+	<div>
+		【<span th:text="${year}"></span>年<span th:text="${month}"></span>月分】合計支出:<span id = "spendTotal">0円</span>
+	</div>
+	<a th:href="@{/spend/add}" id="addlink">支出登録画面へ</a>
+	<a th:href="@{/top/}" id="toplink">TOPへ戻る</a>
+</div>
+</div>
+</body>
+</html>

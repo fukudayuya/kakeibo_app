@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<script src="https://code.jquery.com/jquery-3.0.0.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
+<script src="/js/sampleJs.js" th:src="@{/js/account.js}"></script>
+<link rel="stylesheet" th:href="@{/css/account.css}">
+<link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/jquery.ui/1.12.1/themes/Start/jquery-ui.css">
+<title>ユーザー新規登録</title>
+</head>
+<body>
+	<header id="header">
+		<h1 id="titlename">新規ユーザー登録</h1>
+	</header>
+
+	<div id="formArea">
+	<div th:errors="${accountForm.*}" style="color:red" class="errormessage"></div>
+	<form th:action="@{/account/check}" th:object="${accountForm}" method="post" id="form">
+		<div>
+			<span class="ui-icon ui-icon-person"></span>
+			<input type="text" name="name" placeholder="名前" id="name">
+			 <div class="alert"></div>
+		</div>
+		<div>
+			<span class="ui-icon ui-icon-mail-closed"></span>
+			<input type="email" name="email" placeholder="メールアドレス" id="email">
+			<div class="alert"></div>
+		</div>
+		<div>
+			<span class="ui-icon ui-icon-locked"></span>
+			<input type="password" name="password" placeholder="パスワード" id="password">
+			 <div class="alert"></div>
+		</div>
+		<div>
+			<span class="ui-icon ui-icon-locked"></span>
+			<input type="password" name="checkpassword" placeholder="確認用パスワード" id="checkpassword">
+			 <div class="alert"></div>
+		</div>
+		<div>
+			<input type="button" th:value="戻る" onclick="history.back()"/>
+			<input type="submit" th:value="確認" class="submit"/>
+		</div>
+	</form>
+	</div>
+</body>
+</html>

@@ -1,0 +1,132 @@
+@charset "UTF-8";
+
+body{
+	margin-top:0;
+	font-family: "M PLUS 1p";
+	background-color: #f8f4e6;
+}
+
+#header{
+	position: fixed;
+	top:0;
+	left:0;
+	margin:0;
+	padding: 4px;
+	background-color: #8be4f0;
+	background-image: linear-gradient(-90deg, #80deea 50%, transparent 50%, transparent);
+	background-size: 15px 15px;
+	width: 100%;
+	text-align: right;
+	height: 100px;
+    line-height: 100px;
+}
+
+#titlename{
+	position: fixed;
+	line-height: 50px
+}
+/*
+#useredit{
+	position: fixed;
+	right: 1%;
+	top: 4%;
+}
+*/
+
+#inlineblock{
+ margin: 10px;
+}
+
+#inlineblock button{
+	display: inline-block;
+	vertical-align: middle;
+}
+
+.main{
+	margin-top:150px;
+	text-align:center;
+}
+
+.canvasArea {
+	margin:auto;
+	width: 650px;
+	height: 350px;
+}
+.alert{
+	color: red;
+}
+
+#button{
+    position:static;
+}
+
+#selectYear-button{
+	position:static;
+}
+#selectMonth-button{
+	position:static;
+}
+span.ui-icon{
+	position:static;
+}
+
+.boxtop{
+	display:inline-block;
+	vertical-align: top;
+	font-size:20px;
+	background-color: white;
+    padding: 0.5em 1em;
+    border: solid 3px #62c1ce;
+    box-shadow: 2px 1px  5px;
+    width:42%;
+}
+
+#topleft{
+	padding:0.7em;
+	text-align:left;
+	margin-bottom:2.4em;
+}
+
+#topright{
+	text-align:left;
+}
+label.ui-checkboxradio-label{
+	position:static;
+}
+
+.box{
+	text-align:center;
+	background-color: white;
+    margin: 2em;
+    padding: 0.5em 1em;
+    border: solid 3px #62c1ce;
+    box-shadow: 2px 1px  5px;
+}
+
+#targetprice{
+	font-size:30px;
+}
+
+#targetprice button{
+	font-size:20px;
+}
+
+
+#nowsavings{
+	font-size:30px;
+}
+
+.selectForm{
+	text-align:center;
+}
+h3{
+	font-size: 30px;
+	margin: 15px;
+}
+#price{
+	font-size:30px;
+}
+
+.colorred{
+	color: red;
+}

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<script src="https://code.jquery.com/jquery-3.0.0.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
+<script src="https://rawgit.com/jquery/jquery-ui/master/ui/i18n/datepicker-ja.js"></script>
+<script src="/js/sampleJs.js" th:src="@{/js/spend.js}"></script>
+<link rel="stylesheet" th:href="@{/css/spendAdd.css}">
+<link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/jquery.ui/1.12.1/themes/Start/jquery-ui.css">
+<link href="https://fonts.googleapis.com/css?family=M+PLUS+1p" rel="stylesheet"><!-- タイトルフォントcss -->
+<title>支出編集・削除画面</title>
+</head>
+<body>
+
+<header id="header">
+	<h1 id="titlename">支出編集・削除画面</h1>
+	<span id = "inlineblock">
+		<button onclick="location.href='/top/'">TOP</button>
+		<button onclick="location.href='/login/logout'">ログアウト</button>
+	</span>
+</header>
+
+<div class="main">
+<div class="box">
+	<form th:action="@{/spend/editcomplete}" th:object="${spendEditForm}" id="spendForm" method="post">
+		<div>
+			<input type="hidden" name="userid" th:value="${session.loginItem.userid}">
+			<input type="hidden" name="spendid" th:value="${findTargetSpend.spendid}">
+			支出ジャンル：
+			<select name="spendgenreid">
+				<option th:each="genre : ${genreList}" th:value="${genre.spendgenreid}" th:text="${genre.spendgenrename}" th:selected="${findTargetSpend.genreid} == ${genre.spendgenreid}">
+			</select>
+		</div>
+		<div id="dateform">
+			<div class="alert"></div>
+			日付：<input type="text" name ="spenddate" id="date" th:value="${findTargetSpend.spenddate}" autocomplete="off">
+		</div>
+		<div id="titleform">
+			<div class="alert"></div>
+			題目：<input type="text" name="title" placeholder="〇〇スーパー" id="title" th:value="${findTargetSpend.title}">
+		</div>
+		<div id="priceform">
+			<div class="alert"></div>
+			金額：<input type="number" name="price" placeholder="1000" id="price" th:value="${findTargetSpend.price}">円
+		</div>
+		<div id="contentsform">
+			<div class="alert"></div>
+			内容：<div><textarea rows="30" cols="40" name="contents" id="contents" placeholder="牛乳、キャベツ、ビール" th:field="${findTargetSpend.contents}"></textarea></div>
+		</div>
+
+		<div id="alert" class="alert"></div>
+
+		<input type="button" th:value="戻る" onclick="history.back()">
+		<input type="submit" th:value="変更" class="submit"/>
+	</form>
+</div>
+</div>
+</body>
+
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<script src="https://code.jquery.com/jquery-3.0.0.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
+<script src="/js/sampleJs.js" th:src="@{/js/accountcheck.js}"></script>
+<link rel="stylesheet" th:href="@{/css/accountcheck.css}">
+<link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/jquery.ui/1.12.1/themes/Start/jquery-ui.css">
+<link href="https://fonts.googleapis.com/css?family=M+PLUS+1p" rel="stylesheet"><!-- タイトルフォントcss -->
+<title>ユーザー情報変更確認</title>
+</head>
+<body>
+	<header id="header">
+ 		<h1 id="titlename">ユーザー情報変更確認画面</h1>
+		<span id="inlinebox">
+			<button id="inlinebutton" onclick="location.href='/top/'">TOP</button>
+			<button id="inlinebutton" onclick="location.href='/login/logout'">ログアウト</button>
+		</span>
+	</header>
+	<div class="main">
+	<div class="box">
+	<form th:action="@{/accountEdit/finish}" th:object="${accountEditForm}" method="post">
+		<input type="hidden" name="userid" th:value="${session.accountEdit.userid}">
+		<div>
+			ユーザー名:<span th:text="${session.accountEdit.name}" id="name"></span>
+					 <input type="hidden" name="name" th:value="${session.accountEdit.name}">
+		</div>
+		<div>
+			メールアドレス:<span th:text="${session.accountEdit.email}" id="email"></span>
+						<input type="hidden" name="email" th:value="${session.accountEdit.email}">
+		</div>
+		<div>
+			パスワード:<span th:text="${session.accountEdit.password}" id="password"></span>
+					 <input type="hidden" name="password" th:value="${session.accountEdit.password}">
+		</div>
+		<div>
+			<button onclick="history.back()">戻る</button>
+			<button type="submit" class="submit">登録</button>
+		</div>
+	</form>
+	</div>
+	</div>
+</body>
+</html>

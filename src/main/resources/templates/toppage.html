@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<script src="https://code.jquery.com/jquery-3.0.0.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.min.js"></script>
+<script th:src="@{/js/toppage.js}"></script>
+<link rel="stylesheet" th:href="@{/css/toppage.css}">
+<link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/jquery.ui/1.12.1/themes/Start/jquery-ui.css">
+<link href="https://fonts.googleapis.com/css?family=M+PLUS+1p" rel="stylesheet"><!-- タイトルフォントcss -->
+<title>家計簿トップページ</title>
+</head>
+<body>
+	<header id="header">
+ 		<h1 id="titlename"><span th:text="${session.loginItem.name}"></span>さんの家計簿</h1>
+ 			<span id = "inlineblock">
+				<button onclick="location.href='/accountEdit/'">ユーザー情報変更</button>
+				<button onclick="location.href='/login/logout'">ログアウト</button>
+			</span>
+	</header>
+
+	<div class="main">
+	<div class="boxtop" id="topleft">
+		<div><h3>貯金状況</h3></div>
+		<div th:if="${session.loginItem.savingStatus eq 2}" id="success">目標貯金額達成！！</div>
+		<div id="targetprice">目標貯金額：
+			<span th:if="${session.loginItem.savingStatus eq 0}">
+				<span>---円</span>
+			</span>
+			<span th:if="${session.loginItem.savingStatus eq 1}">
+				<span th:text="${session.loginItem.targetSavings}"></span>円
+			</span>
+			<span th:if="${session.loginItem.savingStatus eq 2}">
+				<span th:text="${session.loginItem.targetSavings}"></span>円
+			</span>
+		</div>
+
+		<div id="nowsavings">現在の貯金額：
+			<span th:if="${session.loginItem.savingStatus} eq 0">
+				---円
+			</span>
+			<span th:if="${session.loginItem.savingStatus} neq 0">
+				<span th:text="${session.loginItem.nowSavings}"></span>円
+			</span>
+		</div>
+		<div th:if="${session.loginItem.savingStatus eq 0}">
+			<a th:href="@{/saving/add}"><button type="button" id="button">目標貯金額設定</button></a>
+		</div>
+		<div th:if="${session.loginItem.savingStatus eq 1}">
+			<a th:href="@{/saving/edit}"><button type="button" id="button">目標貯金額変更</button></a>
+		</div>
+		<div th:if="${session.loginItem.savingStatus eq 2}">
+			<a th:href="@{/saving/add}"><button type="button" id="button">目標貯金額設定</button></a>
+		</div>
+	</div>
+
+		<div class="boxtop" id="topright">
+		<div>
+			<h3>収支状況</h3>
+		</div>
+
+	<div>
+		<form th:action="@{/top/confirm}" th:object="${confirmForm}">
+
+			 	<span id="price">当月収支:<span th:text="${balance}" id="balanceplice"></span>円</span>
+			 	<input type="hidden" th:value="${confirmstatus.confirmid}" name="confirmid">
+			 	<input type="hidden" th:value="${confirmDate}" name="confirmdate">
+			 	<input type="hidden" th:value="${balance}" name = "confirmprice">
+			 	<div th:if="${session.loginItem.savingStatus} neq 0">
+			 		<div>
+				 		<input type="checkbox" name="check" value="1" id="confirmcheck">
+				 		<label for="confirmcheck">「現在の貯金額」に反映しない</label>
+				 	</div>
+
+					<div th:if="${confirmstatus.confirmStatus eq 0}">
+			 			<button type="submit" th:value="${confirmstatus.confirmStatus}" name="confirmstatus" id="button">収支確定</button>
+			 		</div>
+			 		<div th:if="${confirmstatus.confirmStatus eq 1}">
+						<button type="submit" th:value="${confirmstatus.confirmStatus}" name="confirmstatus" id="button">収支確定解除</button>
+			 		</div>
+			 	</div>
+		 </form>
+	</div>
+	</div>
+
+	<div class="selectForm">
+	<form th:action="@{/top/}" th:object="${topSerchForm}" id="serchsubmit">
+		<div id="select">
+			<div class ="alert"></div>
+			<select id="selectYear" name="year" th:value="0">
+				<option>---</option>
+			</select>年
+			<select id="selectMonth" name="month" th:value="0">
+				<option>---</option>
+			</select>月分
+			<button type="submit" id="button">検索</button>
+		</div>
+	</form>
+	</div>
+
+	<div class="box">
+		<div id="spendList">
+			<h3>
+				<span th:text="${yearmonth.year}"></span>年
+				<span th:text="${yearmonth.month}"></span>月分
+				支出状況
+			</h3>
+		</div>
+
+		<div class="canvasArea">
+			<canvas id="spendChart"></canvas>
+				<script type="text/javascript" th:inline="javascript">
+					var ctx = document.getElementById("spendChart");
+
+					var sercleChart = new Chart(ctx,{
+						type:'doughnut',
+						data:{
+							labels: /*[[ ${label} ]]*/ ,
+							datasets:[{
+								backgroundColor:[
+									"#BB5179",//食費
+									"#00bfff",//水道
+						            "#FAFF67",//電気
+						            "#800080",//ガス
+						            "#ffa07a",//日用品
+						            "#483d8b",//交通
+						            "#4b0082",//交際
+						            "#ffc0cb",//衣服美容
+						            "#f5deb3",//健康医療
+						            "#66cdaa",//車バイク
+						            "#bdb76b",//教養教育
+						            "#ffd700",//趣味娯楽
+						            "#add8e6",//住宅
+						            "#7b68ee",//通信
+						            "#8fbc8f",//税社会保険
+						            "#f0e68c",//保険
+						            "#a9a9a9"//その他
+
+						 			],
+							data: /*[[ ${data} ]]*/
+							}]
+
+						},
+						options:{
+							title:{
+								display:true,
+								text:'支出情報'
+							}
+						}
+					});
+				</script>
+		</div>
+
+		<div id="price">当月の合計支出:<span th:text="${spendtotal.spendSumTotal}"></span>円</div>
+
+		<div>
+			<button onclick="location.href='/spend/add'" th:disabled="${confirmstatus.confirmStatus eq 1}"  id="button">支出登録</button></a>
+			<button onclick="location.href='/spend/details'"  th:disabled="${confirmstatus.confirmStatus eq 1}"  id="button">支出詳細・変更・削除</button></a>
+		</div>
+	</div>
+
+	<div class="box">
+		<div id="incomeList">
+			<h3>収入状況</h3>
+		</div>
+
+		<div id="price">当月の合計収入:<span th:text="${incometotal.incomeSumTotal}"></span>円</div>
+
+		<div id="app">
+			<button onclick="location.href='/income/add'" th:disabled="${confirmstatus.confirmStatus eq 1}"  id="button">収入登録</button></a>
+			<button onclick="location.href='/income/details'" th:disabled="${confirmstatus.confirmStatus eq 1}"  id="button">収入詳細・変更・削除</button></a>
+		</div>
+	</div>
+
+	</div>
+
+</body>
+</html>

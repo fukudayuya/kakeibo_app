@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<script src="https://code.jquery.com/jquery-3.0.0.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
+<script th:src="@{/js/incomeDetails.js}"></script>
+<script src="https://rawgit.com/jquery/jquery-ui/master/ui/i18n/datepicker-ja.js"></script>
+<link rel="stylesheet" th:href="@{/css/incomeDetails.css}">
+<link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/jquery.ui/1.12.1/themes/Start/jquery-ui.css">
+<link href="https://fonts.googleapis.com/css?family=M+PLUS+1p" rel="stylesheet"><!-- タイトルフォントcss -->
+<title>収入詳細画面</title>
+</head>
+<body>
+<header id="header">
+	<h1 id="titlename">収入詳細画面</h1>
+	<span id = "inlineblock">
+		<button onclick="location.href='/top/'">TOP</button>
+		<button onclick="location.href='/login/logout'">ログアウト</button>
+	</span>
+</header>
+
+<div class="main">
+<div class="box">
+	<form th:action="@{/income/details}" th:object="${FindSpendDateForm}">
+		<span id="year"></span><span id="month"></span><input type="submit" value="検索">
+	</form>
+	<div id="tabs">
+	<ul class="tab">
+		<li><a th:href="@{#salary}" class="link">給与</a></li>
+		<li><a th:href="@{#bonus}" class="link">賞与</a></li>
+		<li><a th:href="@{#side}" class="link">副業</a></li>
+		<li><a th:href="@{#pension}" class="link">年金</a></li>
+		<li><a th:href="@{#dividend}" class="link">配当</a></li>
+		<li><a th:href="@{#realestate}" class="link">不動産</a></li>
+		<li><a th:href="@{#other}" class="link">その他</a></li>
+	</ul>
+
+	<div class="tabContents active" id="salary">
+		<h3>給与</h3>
+		<table border="1">
+			<tr>
+				<th>日付</th>
+				<th>題目</th>
+				<th>金額</th>
+				<th>内容</th>
+				<th>編集</th>
+				<th>削除</th>
+			</tr>
+			<tr th:each="salary : ${salaryList}" th:object="${salary}" class="spenddata">
+				<td><span th:text="*{incomedate}"></span></td>
+				<td><span th:text="*{title}"></span></td>
+				<td><span th:text="*{price}" class="price"></span></td>
+				<td><span th:text="*{contents}"></span></td>
+				<td>
+					<form th:action="@{/income/edit/{incomeid}(incomeid=*{incomeid})}">
+						<input type="submit" th:value="編集" class="edit"/>
+					</form>
+				</td>
+				<td>
+					<form th:action="@{/income/deletecomplete/{incomeid}(incomeid=*{incomeid})}">
+						<input type="submit" th:value="削除" class="delete"/>
+					</form>
+				</td>
+			</tr>
+		</table>
+		<div>給与合計金額:<span id= "totalPrice">0</span>円</div>
+	</div>
+
+	<div class="tabContents" id="bonus">
+		<h3>賞与</h3>
+			<table border="1">
+				<tr>
+					<th>日付</th>
+					<th>題目</th>
+					<th>金額</th>
+					<th>内容</th>
+					<th>編集</th>
+					<th>削除</th>
+				</tr>
+				<tr th:each="bonus : ${bonusList}" th:object="${bonus}">
+					<td><span th:text="*{incomedate}"></span></td>
+					<td><span th:text="*{title}"></span></td>
+					<td><span th:text="*{price}" class="price"></span></td>
+					<td><span th:text="*{contents}"></span></td>
+					<td>
+						<form th:action="@{/income/edit/{incomeid}(incomeid=*{incomeid})}">
+							<input type="submit" th:value="編集" class="edit"/>
+						</form>
+					</td>
+					<td>
+						<form th:action="@{/income/deletecomplete/{incomeid}(incomeid=*{incomeid})}">
+							<input type="submit" th:value="削除" class="delete"/>
+						</form>
+					</td>
+				</tr>
+
+			</table>
+			<div>賞与合計金額:<span id= "totalPrice">0</span>円</div>
+	</div>
+	<div class="tabContents" id="side">
+		<h3>副業</h3>
+		<table border="1">
+			<tr>
+				<th>日付</th>
+				<th>題目</th>
+				<th>金額</th>
+				<th>内容</th>
+				<th>編集</th>
+				<th>削除</th>
+			</tr>
+			<tr th:each="side : ${sideList}" th:object="${side}">
+					<td><span th:text="*{incomedate}"></span></td>
+					<td><span th:text="*{title}"></span></td>
+					<td><span th:text="*{price}" class="price"></span></td>
+					<td><span th:text="*{contents}"></span></td>
+					<td>
+						<form th:action="@{/income/edit/{incomeid}(incomeid=*{incomeid})}">
+							<input type="submit" th:value="編集" class="edit"/>
+						</form>
+					</td>
+					<td>
+						<form th:action="@{/income/deletecomplete/{incomeid}(incomeid=*{incomeid})}">
+							<input type="submit" th:value="削除" class="delete"/>
+						</form>
+					</td>
+				</tr>
+		</table>
+		<div>副業合計金額:<span id="totalPrice">0</span>円</div>
+	</div>
+	<div class="tabContents" id="pension">
+		<h3>年金</h3>
+		<table border="1">
+			<tr>
+				<th>日付</th>
+				<th>題目</th>
+				<th>金額</th>
+				<th>内容</th>
+				<th>編集</th>
+				<th>削除</th>
+			</tr>
+			<tr th:each="pension : ${pensionList}" th:object="${pension}">
+					<td><span th:text="*{incomedate}"></span></td>
+					<td><span th:text="*{title}"></span></td>
+					<td><span th:text="*{price}" class="price"></span></td>
+					<td><span th:text="*{contents}"></span></td>
+					<td>
+						<form th:action="@{/income/edit/{incomeid}(incomeid=*{incomeid})}">
+							<input type="submit" th:value="編集" class="edit"/>
+						</form>
+					</td>
+					<td>
+						<form th:action="@{/income/deletecomplete/{incomeid}(incomeid=*{incomeid})}">
+							<input type="submit" th:value="削除" class="delete"/>
+						</form>
+					</td>
+				</tr>
+		</table>
+		<div>年金合計金額:<span id= "totalPrice">0</span>円</div>
+	</div>
+	<div class="tabContents" id="dividend">
+		<h3>配当</h3>
+		<table border="1">
+			<tr>
+				<th>日付</th>
+				<th>題目</th>
+				<th>金額</th>
+				<th>内容</th>
+				<th>編集</th>
+				<th>削除</th>
+			</tr>
+			<tr th:each="dividend : ${dividendList}" th:object="${dividend}">
+					<td><span th:text="*{incomedate}"></span></td>
+					<td><span th:text="*{title}"></span></td>
+					<td><span th:text="*{price}" class="price"></span></td>
+					<td><span th:text="*{contents}"></span></td>
+					<td>
+						<form th:action="@{/income/edit/{incomeid}(incomeid=*{incomeid})}">
+							<input type="submit" th:value="編集" class="edit"/>
+						</form>
+					</td>
+					<td>
+						<form th:action="@{/income/deletecomplete/{incomeid}(incomeid=*{incomeid})}">
+							<input type="submit" th:value="削除" class="delete"/>
+						</form>
+					</td>
+				</tr>
+		</table>
+		<div>配当合計金額:<span id="totalPrice">0</span>円</div>
+	</div>
+	<div class="tabContents" id="realestate">
+		<h3>不動産</h3>
+		<table border="1">
+			<tr>
+				<th>日付</th>
+				<th>題目</th>
+				<th>金額</th>
+				<th>内容</th>
+				<th>編集</th>
+				<th>削除</th>
+			</tr>
+			<tr th:each="realestate : ${realestateList}" th:object="${realestate}">
+					<td><span th:text="*{incomedate}"></span></td>
+					<td><span th:text="*{title}"></span></td>
+					<td><span th:text="*{price}" class="price"></span></td>
+					<td><span th:text="*{contents}"></span></td>
+					<td>
+						<form th:action="@{/income/edit/{incomeid}(incomeid=*{incomeid})}">
+							<input type="submit" th:value="編集" class="edit"/>
+						</form>
+					</td>
+					<td>
+						<form th:action="@{/income/deletecomplete/{incomeid}(incomeid=*{incomeid})}">
+							<input type="submit" th:value="削除" class="delete"/>
+						</form>
+					</td>
+				</tr>
+		</table>
+		<div>不動産合計金額:<span id= "totalPrice">0</span>円</div>
+	</div>
+	<div class="tabContents" id="other">
+		<h3>その他</h3>
+		<table border="1">
+			<tr>
+				<th>日付</th>
+				<th>題目</th>
+				<th>金額</th>
+				<th>内容</th>
+				<th>編集</th>
+				<th>削除</th>
+			</tr>
+			<tr th:each="otherincome : ${otherIncomeList}" th:object="${otherincome}">
+				<td><span th:text="*{incomedate}"></span></td>
+				<td><span th:text="*{title}"></span></td>
+				<td><span th:text="*{price}" class="price"></span></td>
+				<td><span th:text="*{contents}"></span></td>
+				<td>
+					<form th:action="@{/income/edit/{incomeid}(incomeid=*{incomeid})}">
+						<input type="submit" th:value="編集" class="edit"/>
+					</form>
+				</td>
+				<td>
+					<form th:action="@{/income/deletecomplete/{incomeid}(incomeid=*{incomeid})}">
+						<input type="submit" th:value="削除" class="delete"/>
+					</form>
+				</td>
+			</tr>
+		</table>
+		<div>その他合計金額:<span id= "totalPrice">0</span>円</div>
+		</div>
+	</div>
+
+
+	<div>
+		【<span th:text="${year}"></span>年<span th:text="${month}"></span>月分】合計収入:<span id = "incomeTotal">0円</span>
+	</div>
+	<a th:href="@{/income/add}" id="addlink">収入登録画面へ</a>
+	<a th:href="@{/top/}" id="toplink">TOPへ戻る</a>
+</div>
+</div>
+</body>
+</html>
