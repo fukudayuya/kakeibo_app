@@ -5,9 +5,9 @@ spring:
       suffix: .jsp
   datasource:
     driver-class-name: org.postgresql.Driver 
-    url: jdbc:postgresql://localhost:5432/kakeibo
-    username: postgres
-    password: postgres
+    url: jdbc:postgresql://${hostname}/${dbname}
+    username: ${username}
+    password: ${password}
   jpa:
     properties:
       hibernate:
