@@ -10,7 +10,7 @@ savingsid serial primary key,
 userid int,
 targetSavings int,
 nowSavings int,
-totalSaving int,
+totalSavings int,
 savingStatus int
 );
 
