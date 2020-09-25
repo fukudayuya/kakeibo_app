@@ -17,6 +17,7 @@
 
 	<div id="formArea">
 	<form th:action="@{/account/finish}" th:object="${accountForm}" method="post">
+		<h3>下記内容で登録してよろしいですか？</h3>
 		<div id="formvalue">
 			ユーザー名:<span th:text="${session.accountForm.name}" id="name"></span>
 					 <input type="hidden" name="name" th:value="${session.accountForm.name}">
