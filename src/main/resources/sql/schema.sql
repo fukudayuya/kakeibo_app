@@ -50,3 +50,23 @@ userid int,
 confirmDate date,
 confirmStatus int
 );
+
+create table autoinput(
+autoinputid serial primary key,
+inputsetid int,
+incomegenreid int,
+title text,
+userid int,
+contents text,
+price int
+);
+
+create table autospend(
+autospendid serial primary key,
+inputsetid int,
+spendgenreid int,
+title text,
+userid int,
+contents text,
+price int
+);

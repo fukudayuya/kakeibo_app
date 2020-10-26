@@ -3,6 +3,8 @@ package com.example.demo.web;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -14,7 +16,10 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.client.RestOperations;
 
+import com.example.demo.config.FortuneResource;
+import com.example.demo.domain.FortuneData;
 import com.example.demo.domain.GetConfirm;
 import com.example.demo.domain.LoginItem;
 import com.example.demo.domain.SerchSaving;
@@ -33,6 +38,14 @@ public class TopController {
 	@Autowired
 	private TopService service;
 
+	@Autowired
+	private RestOperations restOperations;
+
+	public static String toStr(LocalDateTime localDateTime,String format) {
+		DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(format);
+		return localDateTime.format(dateTimeFormatter);
+	}
+
 	@RequestMapping("/")
 	public String toppage(Model model,TopSerchForm form) {
 
@@ -42,11 +55,24 @@ public class TopController {
 		}
 		int userid = loginItem.getUserid();
 
+
+
 		//支出情報表示
 		final LocalDate today = LocalDate.now();
 
 		int year = today.getYear();
 		int month = today.getMonthValue();
+
+		String date = toStr(LocalDateTime.now(),"yyyy/MM/dd");//占う日付(今日)
+		int sign = 0;//星座コード
+		FortuneResource resource = restOperations.getForObject("http://api.jugemkey.jp/api/horoscope/free/"+date, FortuneResource.class);
+		FortuneData fortuneData = resource.getHoroscope().get(date).get(sign);
+		model.addAttribute("fortuneData",fortuneData);
+
+
+//
+//		System.out.println("json取れてる？:"+resource.getHoroscope().get(date));
+
 
 		//top検索機能つけた際に使用
 		if(form.getYear() != 0 && form.getMonth() != 0 ) {
@@ -149,6 +175,17 @@ public class TopController {
 		}
 
 
+	}
+
+	//ユーザー情報変更or自動登録情報登録
+	@RequestMapping("/selectpage")
+	public String selectpage() {
+		LoginItem loginItem = (LoginItem)session.getAttribute("loginItem");
+		if(loginItem == null) {
+			return "redirect:/login/";
+		}
+
+		return "selectpage";
 	}
 
 	//収支確定・解除処理

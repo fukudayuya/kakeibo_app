@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<script src="https://code.jquery.com/jquery-3.0.0.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
+<script src="/js/sampleJs.js" th:src="@{/js/accountEdit.js}"></script>
+<link rel="stylesheet" th:href="@{/css/accountEdit.css}">
+<link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/jquery.ui/1.12.1/themes/Start/jquery-ui.css">
+<link href="https://fonts.googleapis.com/css?family=M+PLUS+1p" rel="stylesheet"><!-- タイトルフォントcss -->
+<title>自動入力情報登録</title>
+</head>
+<body>
+	<header id="header">
+ 		<h1 id="titlename">自動入力情報登録画面</h1>
+		<span id="inlinebox">
+			<button id="inlinebutton" onclick="location.href='/top/'">TOP</button>
+			<button id="inlinebutton" onclick="location.href='/login/logout'">ログアウト</button>
+		</span>
+	</header>
+
+	<div class="main">
+	<div class="box">
+		<div><h3>登録したい情報を選んでください</h3></div>
+			<button onclick="location.href='/autoinput/income'"  id="button">収入情報登録</button>
+			<button onclick="location.href='/autoinput/spend'"  id="button">支出情報登録</button>
+	</div>
+	</div>
+</body>
+</html>

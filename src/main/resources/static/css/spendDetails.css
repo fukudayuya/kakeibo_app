@@ -74,6 +74,11 @@ a:hover{
     width:150px;
 }
 
+section{
+	position: static;
+	display: none;
+}
+
 table{
 	width:100%;
 }

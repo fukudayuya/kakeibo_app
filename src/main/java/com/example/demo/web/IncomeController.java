@@ -22,6 +22,8 @@ import com.example.demo.domain.Income;
 import com.example.demo.domain.IncomeEdit;
 import com.example.demo.domain.IncomeGenre;
 import com.example.demo.domain.LoginItem;
+import com.example.demo.domain.autoIncomeInfo;
+import com.example.demo.service.AutoInputService;
 import com.example.demo.service.IncomeService;
 
 //収入登録画面に表示するプルダウンの中身が取り出せているかの確認
@@ -35,6 +37,9 @@ public class IncomeController {
 
 	@Autowired
 	private IncomeService service;
+
+	@Autowired
+	private AutoInputService autoservice;
 
 	@ModelAttribute
 	IncomeForm setUpForm() {
@@ -57,6 +62,52 @@ public class IncomeController {
 		genre = service.getGenre();
 
 		model.addAttribute("genreList",genre);
+
+		List<autoIncomeInfo> AutoIncomeList = new ArrayList<>();
+
+		//DBに番号1の収入自動登録情報があるか確認
+		autoIncomeInfo AutoIncomeInfo1 = new autoIncomeInfo();
+		AutoIncomeInfo1 = autoservice.getAutoIncome(loginItem.getUserid());
+
+			if(AutoIncomeInfo1 != null ) {
+				//中身があったらまとめてリストへ
+				AutoIncomeList.add(AutoIncomeInfo1);
+			}else {
+				//データがない場合はステータスを1として新規登録
+				autoIncomeInfo AutoIncomeInfox = new autoIncomeInfo();
+				AutoIncomeList.add(AutoIncomeInfox);
+			}
+
+		//DBに番号2の収入自動登録情報があるか確認
+		autoIncomeInfo AutoIncomeInfo2 = new autoIncomeInfo();
+		AutoIncomeInfo2 = autoservice.getAutoIncome2(loginItem.getUserid());
+
+			if(AutoIncomeInfo2 != null ) {
+				//中身があったらモデルスコープへ
+				AutoIncomeList.add(AutoIncomeInfo2);
+			}else {
+				//データがない場合はステータスを1として新規登録
+				autoIncomeInfo AutoIncomeInfo2x = new autoIncomeInfo();
+				AutoIncomeList.add(AutoIncomeInfo2x);
+			}
+
+		//DBに番号3の収入自動登録情報があるか確認
+		autoIncomeInfo AutoIncomeInfo3 = new autoIncomeInfo();
+		AutoIncomeInfo3 = autoservice.getAutoIncome3(loginItem.getUserid());
+
+			if(AutoIncomeInfo3 != null ) {
+				//中身があったらモデルスコープへ
+				System.out.println("AutoIncome3へイン");
+				AutoIncomeList.add(AutoIncomeInfo3);
+			}else {
+				//データがない場合はステータスを1として新規登録
+				autoIncomeInfo AutoIncomeInfo3x = new autoIncomeInfo();
+				AutoIncomeList.add(AutoIncomeInfo3x);
+			}
+
+		//ダイアログで表示するデータ
+		model.addAttribute("autoincomelist",AutoIncomeList);
+
 
 		return "IncomeAdd";
 	}

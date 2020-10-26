@@ -36,21 +36,20 @@
 			</select>
 		</div>
 		<div id="dateform">
-			<div class="alert"></div>
 			日付：<input type="text" name ="incomedate" id="date" th:value="${findTargetIncome.incomedate}" autocomplete="off">
+			<div class="alert"></div>
 		</div>
 		<div id="titleform">
-			<div class="alert"></div>
 			題目：<input type="text" name="title" id="title" placeholder="〇〇スーパー" th:value="${findTargetIncome.title}">
-			<div id="alert" class="alert"></div>
+			<div class="alert"></div>
 		</div>
 		<div id="priceform">
-			<div class="alert"></div>
 			金額：<input type="text" name="price" id="price" placeholder="1000" th:value="${findTargetIncome.price}">円
+			<div class="alert"></div>
 		</div>
 		<div id="contentsform">
-			<div class="alert"></div>
 			内容：<div><textarea rows="30" cols="40" name="contents" id="contents" placeholder="牛乳、キャベツ、ビール" th:field="${findTargetIncome.contents}"></textarea></div>
+			<div class="alert"></div>
 		</div>
 
 		<div id="alert" class="alert"></div>

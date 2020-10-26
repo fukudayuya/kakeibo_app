@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<script src="https://code.jquery.com/jquery-3.0.0.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
+<script th:src="@{/js/spend.js}"></script>
+<link rel="stylesheet" th:href="@{/css/IncomeAdd.css}">
+<link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/jquery.ui/1.12.1/themes/Start/jquery-ui.css">
+<link href="https://fonts.googleapis.com/css?family=M+PLUS+1p" rel="stylesheet"><!-- タイトルフォントcss -->
+<title>支出自動登録編集画面</title>
+</head>
+<body>
+	<header id="header">
+ 		<h1 id="titlename">支出自動登録編集画面</h1>
+		<span id="inlinebox">
+			<button id="inlinebutton" onclick="location.href='/top/'">TOP</button>
+			<button id="inlinebutton" onclick="location.href='/login/logout'">ログアウト</button>
+		</span>
+	</header>
+
+	<div class="main">
+	<h3>※登録できるデータは5つまでです</h3>
+	<div class="box">
+<!--  	<div th:errors="${accountEditForm.*}" style="color:red" class="errormessage"></div> -->
+	<form th:action="@{/autoinput/spendset}" th:object="${autoInputForm}" method="post" id="spendForm">
+		<div>
+			<input type="hidden" name="userid" th:value="${session.loginItem.userid}">
+			登録番号：1<input type="hidden" name="inputsetid" th:value="1">
+		</div>
+		<div>
+			支出ジャンル：
+			<select name="genreid">
+				<option th:each="genre : ${genreList}" th:value="${genre.spendgenreid}" th:text="${genre.spendgenrename}">
+			</select>
+		</div>
+		<div id="titleform">
+			題目：
+			<span th:unless = "${AutoSpendInfo1.title}">
+				<input type="text" name="title" id="title" placeholder="給与">
+			</span>
+			<span th:if="${AutoSpendInfo1.title}">
+				<input type="text" name="title" id="title" placeholder="給与" th:value = "${AutoSpendInfo1.title}">
+			</span>
+			<div class="alert"></div>
+		</div>
+		<div id="priceform">
+			金額：
+			<span th:unless="${AutoSpendInfo1.price}">
+				<input type="text" name="price" id="price" placeholder="200000">
+			</span>
+			<span th:if="${AutoSpendInfo1.price}">
+				<input type="text" name="price" id="price" placeholder="200000" th:value = "${AutoSpendInfo1.price}">
+			</span>
+			円
+			<div class="alert"></div>
+		</div>
+		<div id="contentsform">
+			内容：<div><textarea rows="30" cols="40" name="contents" id="contents" placeholder="牛乳、キャベツ、ビール" th:field="${AutoSpendInfo1.contents}"></textarea></div>
+			<div class="alert"></div>
+		</div>
+		<input type="hidden" name="inputstatus" th:value="${input1status}">
+		<div>
+			<button type="submit" class="submit">登録</button>
+		</div>
+	</form>
+	</div>
+	<div class="box">
+	<form th:action="@{/autoinput/spendset}" th:object="${autoInputForm}" method="post" id="spendForm2">
+		<div>
+			<input type="hidden" name="userid" th:value="${session.loginItem.userid}">
+			登録番号：2<input type="hidden" name="inputsetid" th:value="2">
+		</div>
+		<div>
+			支出ジャンル：
+			<select name="genreid">
+				<option th:each="genre : ${genreList}" th:value="${genre.spendgenreid}" th:text="${genre.spendgenrename}">
+			</select>
+		</div>
+		<div id="titleform2">
+			題目：
+			<span th:unless = "${AutoSpendInfo2.title}">
+				<input type="text" name="title" id="title2" placeholder="給与">
+			</span>
+			<span th:if="${AutoSpendInfo2.title}">
+				<input type="text" name="title" id="title2" placeholder="給与" th:value = "${AutoSpendInfo2.title}">
+			</span>
+			<div class="alert"></div>
+		</div>
+		<div id="priceform2">
+			金額：
+			<span th:unless="${AutoSpendInfo2.price}">
+				<input type="text" name="price" id="pric2" placeholder="200000">
+			</span>
+			<span th:if="${AutoSpendInfo2.price}">
+				<input type="text" name="price" id="price2" placeholder="200000" th:value = "${AutoSpendInfo2.price}">
+			</span>
+			円
+			<div class="alert"></div>
+		</div>
+		<div id="contentsform2">
+			内容：<div><textarea rows="30" cols="40" name="contents" id="contents2" placeholder="牛乳、キャベツ、ビール" th:field="${AutoSpendInfo2.contents}"></textarea></div>
+			<div class="alert"></div>
+		</div>
+		<input type="hidden" name="inputstatus" th:value="${input2status}">
+		<div>
+			<button type="submit" class="submit">登録</button>
+		</div>
+	</form>
+	</div>
+
+	<div class="box">
+	<form th:action="@{/autoinput/spendset}" th:object="${autoInputForm}" method="post" id="spendForm3">
+		<div>
+			<input type="hidden" name="userid" th:value="${session.loginItem.userid}">
+			登録番号：3<input type="hidden" name="inputsetid" th:value="3">
+		</div>
+		<div>
+			支出ジャンル：
+			<select name="genreid">
+				<option th:each="genre : ${genreList}" th:value="${genre.spendgenreid}" th:text="${genre.spendgenrename}">
+			</select>
+		</div>
+		<div id="titleform3">
+			題目：
+			<span th:unless = "${AutoSpendInfo3.title}">
+				<input type="text" name="title" id="title3" placeholder="給与">
+			</span>
+			<span th:if="${AutoSpendInfo3.title}">
+				<input type="text" name="title" id="title3" placeholder="給与" th:value = "${AutoSpendInfo3.title}">
+			</span>
+			<div class="alert"></div>
+		</div>
+		<div id="priceform3">
+			金額：
+			<span th:unless="${AutoSpendInfo3.price}">
+				<input type="text" name="price" id="price3" placeholder="200000">
+			</span>
+			<span th:if="${AutoSpendInfo3.price}">
+				<input type="text" name="price" id="price3" placeholder="200000" th:value = "${AutoSpendInfo3.price}">
+			</span>
+			円
+			<div class="alert"></div>
+		</div>
+		<div id="contentsform3">
+			内容：<div><textarea rows="30" cols="40" name="contents" id="contents3" placeholder="牛乳、キャベツ、ビール" th:field="${AutoSpendInfo3.contents}"></textarea></div>
+			<div class="alert"></div>
+		</div>
+		<input type="hidden" name="inputstatus" th:value="${input3status}">
+		<div>
+			<button type="submit" class="submit">登録</button>
+		</div>
+	</form>
+	</div>
+
+	<div class="box">
+	<form th:action="@{/autoinput/spendset}" th:object="${autoInputForm}" method="post" id="spendForm4">
+		<div>
+			<input type="hidden" name="userid" th:value="${session.loginItem.userid}">
+			登録番号：4<input type="hidden" name="inputsetid" th:value="4">
+		</div>
+		<div>
+			支出ジャンル：
+			<select name="genreid">
+				<option th:each="genre : ${genreList}" th:value="${genre.spendgenreid}" th:text="${genre.spendgenrename}">
+			</select>
+		</div>
+		<div id="titleform4">
+			題目：
+			<span th:unless = "${AutoSpendInfo4.title}">
+				<input type="text" name="title" id="title4" placeholder="給与">
+			</span>
+			<span th:if="${AutoSpendInfo4.title}">
+				<input type="text" name="title" id="title4" placeholder="給与" th:value = "${AutoSpendInfo4.title}">
+			</span>
+			<div class="alert"></div>
+		</div>
+		<div id="priceform4">
+			金額：
+			<span th:unless="${AutoSpendInfo4.price}">
+				<input type="text" name="price" id="price4" placeholder="200000">
+			</span>
+			<span th:if="${AutoSpendInfo4.price}">
+				<input type="text" name="price" id="price4" placeholder="200000" th:value = "${AutoSpendInfo4.price}">
+			</span>
+			円
+			<div class="alert"></div>
+		</div>
+		<div id="contentsform4">
+			内容：<div><textarea rows="30" cols="40" name="contents" id="contents4" placeholder="牛乳、キャベツ、ビール" th:field="${AutoSpendInfo4.contents}"></textarea></div>
+			<div class="alert"></div>
+		</div>
+		<input type="hidden" name="inputstatus" th:value="${input4status}">
+		<div>
+			<button type="submit" class="submit">登録</button>
+		</div>
+	</form>
+	</div>
+
+	<div class="box">
+	<form th:action="@{/autoinput/spendset}" th:object="${autoInputForm}" method="post" id="spendForm5">
+		<div>
+			<input type="hidden" name="userid" th:value="${session.loginItem.userid}">
+			登録番号：5<input type="hidden" name="inputsetid" th:value="5">
+		</div>
+		<div>
+			支出ジャンル：
+			<select name="genreid">
+				<option th:each="genre : ${genreList}" th:value="${genre.spendgenreid}" th:text="${genre.spendgenrename}">
+			</select>
+		</div>
+		<div id="titleform5">
+			題目：
+			<span th:unless = "${AutoSpendInfo5.title}">
+				<input type="text" name="title" id="title5" placeholder="給与">
+			</span>
+			<span th:if="${AutoSpendInfo5.title}">
+				<input type="text" name="title" id="title5" placeholder="給与" th:value = "${AutoSpendInfo5.title}">
+			</span>
+			<div class="alert"></div>
+		</div>
+		<div id="priceform5">
+			金額：
+			<span th:unless="${AutoSpendInfo5.price}">
+				<input type="text" name="price" id="price5" placeholder="200000">
+			</span>
+			<span th:if="${AutoSpendInfo5.price}">
+				<input type="text" name="price" id="price5" placeholder="200000" th:value = "${AutoSpendInfo5.price}">
+			</span>
+			円
+			<div class="alert"></div>
+		</div>
+		<div id="contentsform5">
+			内容：<div><textarea rows="30" cols="40" name="contents" id="contents5" placeholder="牛乳、キャベツ、ビール" th:field="${AutoSpendInfo5.contents}"></textarea></div>
+			<div class="alert"></div>
+		</div>
+		<input type="hidden" name="inputstatus" th:value="${input5status}">
+		<div>
+			<button type="submit" class="submit">登録</button>
+		</div>
+	</form>
+	</div>
+
+	</div>
+
+</body>
+</html>

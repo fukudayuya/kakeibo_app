@@ -10,6 +10,9 @@
 <link rel="stylesheet" th:href="@{/css/incomeAdd.css}">
 <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/jquery.ui/1.12.1/themes/Start/jquery-ui.css">
 <link href="https://fonts.googleapis.com/css?family=M+PLUS+1p" rel="stylesheet"><!-- タイトルフォントcss -->
+
+<!-- <link href='https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons' rel="stylesheet" type="text/css"> -->
+<!-- <link href="https://cdn.jsdelivr.net/npm/vuetify@1.4.3/dist/vuetify.min.css" rel="stylesheet"> -->
 <title>収入登録画面</title>
 </head>
 <body>
@@ -29,32 +32,64 @@
 		<div>
 			<input type="hidden" name="userid" th:value="${session.loginItem.userid}">
 			収入ジャンル：
-			<select name="genreid">
+			<select name="genreid" id="genreid">
 				<option th:each="genre : ${genreList}" th:value="${genre.incomegenreid}" th:text="${genre.incomegenrename}">
 			</select>
 		</div>
 		<div id="dateform">
-			<div class="alert"></div>
 			日付：<input type="text" name ="incomedate" id="date" autocomplete="off">
+			<div class="alert"></div>
 		</div>
 		<div id="titleform">
-			<div class="alert"></div>
 			題目：<input type="text" name="title" id="title" placeholder="給与">
+			<div class="alert"></div>
 		</div>
 		<div id="priceform">
-			<div class="alert"></div>
 			金額：<input type="text" name="price" id="price" placeholder="200000">円
+			<div class="alert"></div>
 		</div>
 		<div id="contentsform">
-			<div class="alert"></div>
 			内容：<div><textarea rows="30" cols="40" name="contents" id="contents" placeholder="牛乳、キャベツ、ビール"></textarea></div>
+			<div class="alert"></div>
 		</div>
 
 		<div id="alert" class="alert"></div>
 
 		<input type="button" th:value="戻る" onclick="history.back()">
+		<input type="button" th:value="自動登録" id="autobutton"/>
 		<input type="submit" th:value="登録" class="submit"/>
 	</form>
+
+	<!-- ダイアログ部分 -->
+	<div id = "autodialog" title="自動入力情報選択" style="display:none;">
+		<h3>収入登録リスト</h3>
+		<table border="1">
+			<tr>
+				<th>ジャンル</th>
+				<th>題目</th>
+				<th>金額</th>
+				<th>内容</th>
+				<th>ボタン</th>
+			</tr>
+
+			<tr th:each="list : ${autoincomelist}" th:object="${list}">
+				<td>
+				<select disabled>
+					<option th:each="genre : ${genreList}" th:value="${genre.incomegenreid}" th:text="${genre.incomegenrename}" th:selected="*{incomegenreid} == ${genre.incomegenreid}">
+				</select>
+				</td>
+				<td><span th:text="*{title}"></span></td>
+				<td><span th:text="*{price}" class="price"></span></td>
+				<td><span th:text="*{contents}"></span></td>
+				<td>
+				<input type="button" th:value="登録" class="autopush"/>
+				</td>
+			</tr>
+
+		</table>
+	</div>
+
+
 </div>
 </div>
 </body>

@@ -21,6 +21,8 @@ import com.example.demo.domain.Genre;
 import com.example.demo.domain.LoginItem;
 import com.example.demo.domain.Spend;
 import com.example.demo.domain.SpendEdit;
+import com.example.demo.domain.autoSpendInfo;
+import com.example.demo.service.AutoInputService;
 import com.example.demo.service.SpendService;
 
 @Controller
@@ -32,6 +34,9 @@ public class SpendController {
 
 	@Autowired
 	private SpendService service;
+
+	@Autowired
+	private AutoInputService autoservice;
 
 	@ModelAttribute
 	SpendForm setUpForm() {
@@ -54,6 +59,75 @@ public class SpendController {
 		genre = service.getGenre();
 
 		model.addAttribute("genreList",genre);
+
+		List<autoSpendInfo> AutoSpendList = new ArrayList<>();
+
+		//DBに番号1の支出自動登録情報があるか確認
+		autoSpendInfo AutoSpendInfo1 = new autoSpendInfo();
+		AutoSpendInfo1 = autoservice.getAutoSpend1(loginItem.getUserid());
+
+		if(AutoSpendInfo1 != null ) {
+			//中身があったらリストへへ
+			AutoSpendList.add(AutoSpendInfo1);
+		}else {
+			//データがない場合はステータスを1として新規登録
+			autoSpendInfo AutoSpendInfox = new autoSpendInfo();
+			AutoSpendList.add(AutoSpendInfox);
+		}
+
+		//DBに番号2の支出自動登録情報があるか確認
+		autoSpendInfo AutoSpendInfo2 = new autoSpendInfo();
+		AutoSpendInfo2 = autoservice.getAutoSpend2(loginItem.getUserid());
+
+		if(AutoSpendInfo2 != null ) {
+			//中身があったらリストへへ
+			AutoSpendList.add(AutoSpendInfo2);
+		}else {
+			//データがない場合はステータスを1として新規登録
+			autoSpendInfo AutoSpendInfo2x = new autoSpendInfo();
+			AutoSpendList.add(AutoSpendInfo2x);
+		}
+
+		//DBに番号3の支出自動登録情報があるか確認
+		autoSpendInfo AutoSpendInfo3 = new autoSpendInfo();
+		AutoSpendInfo3 = autoservice.getAutoSpend3(loginItem.getUserid());
+
+		if(AutoSpendInfo3 != null ) {
+			//中身があったらリストへへ
+			AutoSpendList.add(AutoSpendInfo3);
+		}else {
+			//データがない場合はステータスを1として新規登録
+			autoSpendInfo AutoSpendInfo3x = new autoSpendInfo();
+			AutoSpendList.add(AutoSpendInfo3x);
+		}
+
+		//DBに番号4の支出自動登録情報があるか確認
+		autoSpendInfo AutoSpendInfo4 = new autoSpendInfo();
+		AutoSpendInfo4 = autoservice.getAutoSpend4(loginItem.getUserid());
+
+		if(AutoSpendInfo4 != null ) {
+			//中身があったらリストへへ
+			AutoSpendList.add(AutoSpendInfo4);
+		}else {
+			//データがない場合はステータスを1として新規登録
+			autoSpendInfo AutoSpendInfo4x = new autoSpendInfo();
+			AutoSpendList.add(AutoSpendInfo4x);
+		}
+
+		//DBに番号5の支出自動登録情報があるか確認
+		autoSpendInfo AutoSpendInfo5 = new autoSpendInfo();
+		AutoSpendInfo5 = autoservice.getAutoSpend5(loginItem.getUserid());
+
+		if(AutoSpendInfo5 != null ) {
+			//中身があったらリストへへ
+			AutoSpendList.add(AutoSpendInfo5);
+		}else {
+			//データがない場合はステータスを1として新規登録
+			autoSpendInfo AutoSpendInfo5x = new autoSpendInfo();
+			AutoSpendList.add(AutoSpendInfo5x);
+		}
+
+		model.addAttribute("autospendlist",AutoSpendList);
 
 		return "SpendAdd";
 	}
@@ -135,6 +209,13 @@ public class SpendController {
 			}catch(ParseException e) {
 				System.out.println(e);
 			}
+
+			//プルダウンのジャンルを取得
+			List<Genre> genre = new ArrayList<>();
+
+			genre = service.getGenre();
+
+			model.addAttribute("genreList",genre);
 
 
 			//食費データを取得

@@ -88,6 +88,12 @@ input[type='password']:focus{
     border-bottom: 2px solid #8be4f0;
 	outline: none;
 }
+
+textarea{
+	width:400px;
+	height:300px;
+}
+
 /* jsでバリデーションチェックした際のエラー表示時 */
 div.alert{
 	color:#ff0000;

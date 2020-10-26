@@ -5,7 +5,7 @@
 <meta charset="UTF-8">
 <script src="https://code.jquery.com/jquery-3.0.0.min.js"></script>
 <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
-<script src="/js/sampleJs.js" th:src="@{/js/spend.js}"></script>
+<script th:src="@{/js/spend.js}"></script>
 <script src="https://rawgit.com/jquery/jquery-ui/master/ui/i18n/datepicker-ja.js"></script>
 <link rel="stylesheet" th:href="@{/css/spendAdd.css}">
 <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/jquery.ui/1.12.1/themes/Start/jquery-ui.css">
@@ -28,33 +28,66 @@
 		<div id="select">
 			<input type="hidden" name="userid" th:value="${session.loginItem.userid}">
 			支出ジャンル：
-			<select name="genreid">
+			<select name="genreid" id="genreid">
 				<option th:each="genre : ${genreList}" th:value="${genre.spendgenreid}" th:text="${genre.spendgenrename}">
 			</select>
 		</div>
 		<div id="dateform">
-			<div class="alert"></div>
 			日付：<input type="text" name ="spenddate" id="date" autocomplete="off">
+			<div class="alert"></div>
 		</div>
 		<div id="titleform">
-			<div class="alert"></div>
 			題目：<input type="text" name="title" id="title" placeholder="〇〇スーパー">
+			<div class="alert"></div>
 		</div>
 		<div id="priceform">
-			<div class="alert"></div>
 			金額：<input type="number" name="price" id="price" placeholder="1000">円
+			<div class="alert"></div>
 		</div>
 		<div id="contentsform">
-			<div class="alert"></div>
 			内容<div><textarea rows="30" cols="40" name="contents" id="contents" placeholder="牛乳、キャベツ、ビール"></textarea>
+			<div class="alert"></div>
 		</div>
 		</div>
 
 		<div id="alert" class="alert"></div>
 
-		<input type="button" th:value="戻る" onclick="history.back()" id="button">
-		<input type="submit" th:value="登録" id="button"/>
+		<input type="button" th:value="戻る" onclick="history.back()">
+		<input type="button" th:value="自動登録" id="autobutton"/>
+		<input type="submit" th:value="登録"/>
 	</form>
+
+	<!-- ダイアログ部分 -->
+	<div id = "autodialog" title="自動入力情報選択" style="display:none;">
+		<h3>支出登録リスト</h3>
+		<table border="1">
+			<tr>
+				<th>ジャンル</th>
+				<th>題目</th>
+				<th>金額</th>
+				<th>内容</th>
+				<th>ボタン</th>
+			</tr>
+
+			<tr th:each="list : ${autospendlist}" th:object="${list}">
+				<td>
+				<select disabled>
+					<option th:each="genre : ${genreList}" th:value="${genre.spendgenreid}" th:text="${genre.spendgenrename}" th:selected="*{spendgenreid} == ${genre.spendgenreid}">
+				</select>
+				</td>
+				<td><span th:text="*{title}"></span></td>
+				<td><span th:text="*{price}" class="price"></span></td>
+				<td><span th:text="*{contents}"></span></td>
+				<td>
+				<input type="button" th:value="登録" class="autopush"/>
+				</td>
+			</tr>
+
+		</table>
+	</div>
+
+
+
 </div>
 </div>
 </body>

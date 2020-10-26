@@ -27,29 +27,13 @@
 	<form th:action="@{/spend/details}" th:object="${FindSpendDateForm}">
 		<span id="year"></span><span id="month"></span><input type="submit" value="検索">
 	</form>
-	<div id="tabs">
-		<ul class="tab">
-			<li><a th:href="@{#food}" class="link">食費</a></li>
-			<li><a th:href="@{#water}" class="link">水道</a></li>
-			<li><a th:href="@{#electriccity}" class="link">電気</a></li>
-			<li><a th:href="@{#gas}" class="link">ガス</a></li>
-			<li><a th:href="@{#necessities}" class="link">日用品</a></li>
-			<li><a th:href="@{#trafic}" class="link">交通費</a></li>
-			<li><a th:href="@{#entertainment}" class="link">交際費</a></li>
-			<li><a th:href="@{#beauty}" class="link">衣服・美容</a></li>
-			<li><a th:href="@{#health}" class="link">健康・医療</a></li>
-			<li><a th:href="@{#vehicle}" class="link">車・バイク</a></li>
-			<li><a th:href="@{#education}" class="link">教養・教育</a></li>
-			<li><a th:href="@{#hobby}" class="link">趣味・娯楽</a></li>
-			<li><a th:href="@{#house}" class="link">住宅</a></li>
-			<li><a th:href="@{#communication}" class="link">通信</a></li>
-			<li><a th:href="@{#tax}" class="link">税・社会保険</a></li>
-			<li><a th:href="@{#insurance}" class="link">保険</a></li>
-			<li><a th:href="@{#other}" class="link">その他</a></li>
-		</ul>
 
+	<select name="genreselect" id="genremenu">
+		<option th:value="0" th:text="選択してください"></option>
+		<option th:each="genre : ${genreList}" th:value="${genre.spendgenreid}" th:text="${genre.spendgenrename}"></option>
+	</select>
 
-	<div class="tabContents " id="food">
+	<section class="tabContents" id="1">
 		<h3>食費</h3>
 		<table border="1">
 			<tr>
@@ -78,9 +62,9 @@
 			</tr>
 		</table>
 		<div>食費合計金額:<span id= "totalPrice">0</span>円</div>
-	</div>
+	</section>
 
-	<div class="tabContents" id="water">
+	<section class="tabContents" id="2">
 		<h3>水道</h3>
 			<table border="1">
 				<tr>
@@ -109,8 +93,8 @@
 				</tr>
 			</table>
 			<div>水道合計金額:<span id= "totalPrice">0</span>円</div>
-	</div>
-	<div class="tabContents" id="electriccity">
+	</section>
+	<section class="tabContents" id="3">
 		<h3>電気</h3>
 		<table border="1">
 			<tr>
@@ -139,8 +123,8 @@
 				</tr>
 		</table>
 		<div>電気合計金額:<span id= "totalPrice">0</span>円</div>
-	</div>
-	<div class="tabContents" id="gas">
+	</section>
+	<section class="tabContents" id="4">
 		<h3>ガス</h3>
 		<table border="1">
 			<tr>
@@ -169,8 +153,8 @@
 				</tr>
 		</table>
 		<div>ガス合計金額:<span id= "totalPrice">0</span>円</div>
-	</div>
-	<div class="tabContents" id="necessities">
+	</section>
+	<section class="tabContents" id="5">
 		<h3>日用品</h3>
 		<table border="1">
 			<tr>
@@ -199,8 +183,8 @@
 				</tr>
 		</table>
 		<div>日用品合計金額:<span id= "totalPrice">0</span>円</div>
-	</div>
-	<div class="tabContents" id="trafic">
+	</section>
+	<section class="tabContents" id="6">
 		<h3>交通</h3>
 		<table border="1">
 			<tr>
@@ -229,8 +213,8 @@
 				</tr>
 		</table>
 		<div>交通費合計金額:<span id= "totalPrice">0</span>円</div>
-	</div>
-	<div class="tabContents" id="entertainment">
+	</section>
+	<section class="tabContents" id="7">
 		<h3>交際</h3>
 		<table border="1">
 			<tr>
@@ -259,8 +243,8 @@
 				</tr>
 		</table>
 		<div>交際合計金額:<span id= "totalPrice">0</span>円</div>
-	</div>
-	<div class="tabContents" id="beauty">
+	</section>
+	<section class="tabContents" id="8">
 		<h3>衣服・美容</h3>
 		<table border="1">
 			<tr>
@@ -289,8 +273,8 @@
 				</tr>
 		</table>
 		<div>衣服・美容合計金額:<span id= "totalPrice">0</span>円</div>
-	</div>
-	<div class="tabContents" id="health">
+	</section>
+	<section class="tabContents" id="9">
 		<h3>健康・医療</h3>
 		<table border="1">
 			<tr>
@@ -319,8 +303,8 @@
 			</tr>
 		</table>
 		<div>健康・医療合計金額:<span id= "totalPrice">0</span>円</div>
-	</div>
-	<div class="tabContents" id="vehicle">
+	</section>
+	<section class="tabContents" id="10">
 		<h3>車・バイク</h3>
 		<table border="1">
 			<tr>
@@ -349,8 +333,8 @@
 			</tr>
 		</table>
 		<div>車・バイク合計金額:<span id= "totalPrice">0</span>円</div>
-	</div>
-	<div class="tabContents" id="education">
+	</section>
+	<section class="tabContents" id="11">
 		<h3>教養・教育</h3>
 		<table border="1">
 			<tr>
@@ -379,8 +363,8 @@
 			</tr>
 		</table>
 		<div>教養・教育合計金額:<span id= "totalPrice">0</span>円</div>
-	</div>
-	<div class="tabContents" id="hobby">
+	</section>
+	<section class="tabContents" id="12">
 		<h3>趣味・娯楽</h3>
 		<table border="1">
 			<tr>
@@ -409,8 +393,8 @@
 			</tr>
 		</table>
 		<div>趣味・娯楽合計金額:<span id= "totalPrice">0</span>円</div>
-	</div>
-	<div class="tabContents" id="house">
+	</section>
+	<section class="tabContents" id="13">
 		<h3>住宅</h3>
 		<table border="1">
 			<tr>
@@ -439,8 +423,8 @@
 			</tr>
 		</table>
 		<div>住宅合計金額:<span id= "totalPrice">0</span>円</div>
-	</div>
-	<div class="tabContents" id="communication">
+	</section>
+	<section class="tabContents" id="14">
 		<h3>通信</h3>
 		<table border="1">
 			<tr>
@@ -469,8 +453,8 @@
 			</tr>
 		</table>
 		<div>通信合計金額:<span id= "totalPrice">0</span>円</div>
-	</div>
-	<div class="tabContents" id="tax">
+	</section>
+	<section class="tabContents" id="15">
 		<h3>税・社会保険</h3>
 		<table border="1">
 			<tr>
@@ -499,8 +483,8 @@
 			</tr>
 		</table>
 		<div>税・社会保険合計金額:<span id= "totalPrice">0</span>円</div>
-	</div>
-	<div class="tabContents" id="insurance">
+	</section>
+	<section class="tabContents" id="16">
 		<h3>保険</h3>
 		<table border="1">
 			<tr>
@@ -529,8 +513,8 @@
 			</tr>
 		</table>
 		<div>保険合計金額:<span id= "totalPrice">0</span>円</div>
-	</div>
-	<div class="tabContents" id="other">
+	</section>
+	<section class="tabContents" id="17">
 		<h3>その他</h3>
 		<table border="1">
 			<tr>
@@ -559,14 +543,14 @@
 			</tr>
 		</table>
 		<div>その他合計金額:<span id= "totalPrice">0</span>円</div>
-	</div>
-	</div>
+	</section>
 	<div>
 		【<span th:text="${year}"></span>年<span th:text="${month}"></span>月分】合計支出:<span id = "spendTotal">0円</span>
 	</div>
 	<a th:href="@{/spend/add}" id="addlink">支出登録画面へ</a>
 	<a th:href="@{/top/}" id="toplink">TOPへ戻る</a>
+	</div>
 </div>
-</div>
+
 </body>
 </html>

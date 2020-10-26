@@ -59,7 +59,7 @@ public class LoginController {
 
 		session.removeAttribute("loginItem");
 
-		return login();
+		return "redirect:/login/";
 	}
 
 }

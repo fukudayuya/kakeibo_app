@@ -16,12 +16,17 @@
 	<header id="header">
  		<h1 id="titlename"><span th:text="${session.loginItem.name}"></span>さんの家計簿</h1>
  			<span id = "inlineblock">
-				<button onclick="location.href='/accountEdit/'">ユーザー情報変更</button>
+				<button onclick="location.href='/top/selectpage'">情報変更</button>
 				<button onclick="location.href='/login/logout'">ログアウト</button>
 			</span>
 	</header>
 
 	<div class="main">
+	<div class="box">
+		今日の<span th:text="${fortuneData.sign}"></span>の運勢
+		<div th:text="${fortuneData.content}"></div>
+		ラッキーアイテム：<span th:text="${fortuneData.item}"></span>
+	</div>
 	<div class="boxtop" id="topleft">
 		<div><h3>貯金状況</h3></div>
 		<div th:if="${session.loginItem.savingStatus eq 2}" id="success">目標貯金額達成！！</div>
