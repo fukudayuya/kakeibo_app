@@ -26,6 +26,34 @@ $(function(){
 		}
 	});
 
+	$("#fortuneButton").click(function(){
+		console.log("占いボタン押下");
+		var sign = $("#selectsign").val();
+
+		var dt = new Date();
+		var year = dt.getFullYear();
+		var month = ('00'+(dt.getMonth()+1)).slice(-2);
+		var day = ('00'+(dt.getDate()+1)).slice(-2);
+
+		var date = year + '/' + month + '/' + day;
+
+		$.ajax({
+			url:'http://api.jugemkey.jp/api/horoscope/free/jsonp/'+date,
+			dataType:'jsonp',
+			jsonpCallback:"callback"
+
+		})
+		.done(function(data){
+//			console.log('jsondata:'+JSON.stringify(data.horoscope[date][sign].content));
+			var contentdata = JSON.stringify(data.horoscope[date][sign].content);
+			var itemdata = JSON.stringify(data.horoscope[date][sign].item);
+			$("#fortuneArea").html('<p>' + contentdata + '</p>' + '<p>ラッキーアイテム:' + itemdata );
+//			alert('jsondata:'+data.horoscope.);
+		});
+
+	});
+
+
 	$("#serchsubmit").submit(function(){
 		console.log("年数チェックNG");
 		var result = true;

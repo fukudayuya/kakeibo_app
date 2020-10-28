@@ -23,9 +23,16 @@
 
 	<div class="main">
 	<div class="box">
-		今日の<span th:text="${fortuneData.sign}"></span>の運勢
-		<div th:text="${fortuneData.content}"></div>
-		ラッキーアイテム：<span th:text="${fortuneData.item}"></span>
+		<div>
+			<h3>今日の運勢コーナー</h3>
+		</div>
+		星座を選んでください
+		<select id="selectsign">
+			<option th:each = "signdata :${signData}" th:text="${signdata.sign}" th:value="${signdata.signvalue}"></option>
+		</select>
+		<button type="button" id="fortuneButton">決定</button>
+		<div id="fortuneArea">
+		</div>
 	</div>
 	<div class="boxtop" id="topleft">
 		<div><h3>貯金状況</h3></div>
