@@ -38,7 +38,7 @@ $(function(){
 		var date = year + '/' + month + '/' + day;
 
 		$.ajax({
-			url:'http://api.jugemkey.jp/api/horoscope/free/jsonp/'+date,
+			url:'//api.jugemkey.jp/api/horoscope/free/jsonp/'+date,
 			dataType:'jsonp',
 			jsonpCallback:"callback"
 
