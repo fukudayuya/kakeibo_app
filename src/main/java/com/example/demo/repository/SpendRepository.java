@@ -13,6 +13,7 @@ import org.springframework.stereotype.Repository;
 
 import com.example.demo.domain.FindSpend;
 import com.example.demo.domain.Genre;
+import com.example.demo.domain.HistoryData;
 import com.example.demo.domain.Spend;
 import com.example.demo.domain.SpendEdit;
 
@@ -49,6 +50,14 @@ public class SpendRepository {
 		return findspend;
 	};
 
+	public static final RowMapper<HistoryData> getHistoryRowMapper = (rs,i) ->{
+		HistoryData historyData = new HistoryData();
+
+		historyData.setTitle(rs.getString("title"));
+
+		return historyData;
+	};
+
 
 	//genreテーブルからジャンルを取得（セレクトボックス用）
 	public List<Genre> getGenre(){
@@ -58,6 +67,13 @@ public class SpendRepository {
 
 		return genre;
 
+	}
+
+	//直近30件の支出履歴を取得
+	public List<HistoryData> getHistiry(){
+		String sql = "select title from spend where userid = 2 order by spendid DESC limit 30";
+		List<HistoryData> historydata = jdbc.query(sql, getHistoryRowMapper);
+		return historydata;
 	}
 
 

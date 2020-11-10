@@ -4,8 +4,15 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpSession;
 
@@ -18,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.demo.domain.FindSpend;
 import com.example.demo.domain.Genre;
+import com.example.demo.domain.HistoryData;
 import com.example.demo.domain.LoginItem;
 import com.example.demo.domain.Spend;
 import com.example.demo.domain.SpendEdit;
@@ -43,6 +51,17 @@ public class SpendController {
 		return new SpendForm();
 	}
 
+	public static LinkedHashMap<HistoryData, Long> sortMapByValue(Map<HistoryData, Long> counts) {
+		List<Map.Entry<HistoryData, Long>> entries = new LinkedList<>(counts.entrySet());
+		Collections.sort(entries,(o1, o2) -> o1.getValue().compareTo(o2.getValue()));
+
+		LinkedHashMap<HistoryData, Long> result = new LinkedHashMap<>();
+		for(Map.Entry<HistoryData, Long> entry : entries) {
+			result.put(entry.getKey(), entry.getValue());
+		}
+		return result;
+	}
+
 	//支出登録画面へ遷移
 	@RequestMapping("/add")
 	public String spendAdd(Model model) {
@@ -61,6 +80,26 @@ public class SpendController {
 		model.addAttribute("genreList",genre);
 
 		List<autoSpendInfo> AutoSpendList = new ArrayList<>();
+
+		//登録履歴の取得
+		List<HistoryData> historyData = service.getHistory();
+		//リストの値と出現個数を取得
+		Map<HistoryData, Long> counts = historyData.stream().collect(Collectors.groupingBy(Function.identity(),Collectors.counting()));
+		//出現回数順に並び替え
+		Map<HistoryData, Long> sortcounts = new HashMap<>();
+		sortcounts = sortMapByValue(counts);//sortMapByValueで並び替え
+		for(Map.Entry<HistoryData, Long> entry : sortcounts.entrySet()) {
+			System.out.println("Key:" + entry.getKey() + ",value:" + entry.getValue());
+		}
+
+		List<HistoryData> souseList = new ArrayList<>(sortcounts.keySet());//MapをListに変換。個数の少ない順で並んでいる。
+		Collections.reverse(souseList);
+		List<HistoryData> subSouseList = souseList.subList(0, 8);
+
+		System.out.println("履歴個数確認:"+ souseList);
+		System.out.println("履歴個数絞り込み:"+ subSouseList);
+
+		model.addAttribute("historyList", subSouseList);
 
 		//DBに番号1の支出自動登録情報があるか確認
 		autoSpendInfo AutoSpendInfo1 = new autoSpendInfo();
@@ -132,7 +171,9 @@ public class SpendController {
 		return "SpendAdd";
 	}
 
-	//支出登録し、TOPへ遷移（アラート出したい）
+
+
+		//支出登録し、TOPへ遷移（アラート出したい）
 		@RequestMapping("/addcomplete")
 		public String spend(SpendForm form) {
 			System.out.println("/spend/addcomplete");

@@ -7,10 +7,6 @@ $(function(){
 				dateformat:'yyyy-MM-dd'
 			});
 
-	$("#autobutton").click(function(){
-		console.log("ボタン押下");
-	});
-
 	////////////////１つ目//////////////////////
 	$("#incomeForm").submit(function(e){
 		var checkSubmit = true;

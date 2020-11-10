@@ -227,8 +227,20 @@ $(function(){
 	});
 
 	//ダイアログ表示
+	$("#historybutton").click(function(){
+		$("#historydialog").dialog({
+			modal: true,
+			width: 250,
+			buttons:{
+				"閉じる":function(){
+					$(this).dialog("close");
+				}
+			}
+		});
+	});
+
+	//ダイアログ表示
 	$("#autobutton").click(function(){
-		console.log("dialogへイン");
 		$("#autodialog").dialog({
 			modal: true,
 			width: 700,
@@ -238,6 +250,16 @@ $(function(){
 				}
 			}
 		});
+	});
+
+	//題目ダイアログの値を取得
+	$(".autotitlepush").on("click",function(){
+		console.log("titleプッシュ");
+		var title = $(this).closest('tr').children("td")[0].innerText;
+		console.log("title取得確認:"+title)
+		$("input[name=title]").val(title);
+		$(".ui-dialog-content").dialog("close");
+
 	});
 
 	//ダイアログの値を取得

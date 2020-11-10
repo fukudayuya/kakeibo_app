@@ -38,6 +38,7 @@
 		</div>
 		<div id="titleform">
 			題目：<input type="text" name="title" id="title" placeholder="〇〇スーパー">
+				<input type="button" th:value="よく使う題目" id="historybutton"/>
 			<div class="alert"></div>
 		</div>
 		<div id="priceform">
@@ -57,7 +58,27 @@
 		<input type="submit" th:value="登録"/>
 	</form>
 
-	<!-- ダイアログ部分 -->
+	<!-- 履歴登録ダイアログ部分 -->
+	<div id = "historydialog" title="自動入力情報選択" style="display:none;">
+		<p>※過去に登録した題目の<p>多い順で出力。</p>
+		<h3>よく使う題目リスト</h3>
+		<table border = "1">
+			<tr>
+				<th>題目</th>
+				<th>ボタン</th>
+			</tr>
+			<tr th:each="list : ${historyList}" th:object="${list}">
+				<td>
+					<span th:text="*{title}"></span>
+				</td>
+				<td>
+					<input type="button" th:value="登録" class="autotitlepush"/>
+				</td>
+			</tr>
+		</table>
+	</div>
+
+	<!-- 自動登録ダイアログ部分 -->
 	<div id = "autodialog" title="自動入力情報選択" style="display:none;">
 		<h3>支出登録リスト</h3>
 		<table border="1">

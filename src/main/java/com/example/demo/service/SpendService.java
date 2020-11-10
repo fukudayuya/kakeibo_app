@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.demo.domain.FindSpend;
 import com.example.demo.domain.Genre;
+import com.example.demo.domain.HistoryData;
 import com.example.demo.domain.Spend;
 import com.example.demo.domain.SpendEdit;
 import com.example.demo.repository.SpendRepository;
@@ -38,6 +39,11 @@ public class SpendService {
 	//DBから選択支出情報削除
 	public void SpendDelete(int spendid,int userid) {
 		repository.SpendDelete(spendid, userid);
+	}
+
+	//履歴情報の習得
+	public List<HistoryData> getHistory(){
+		return repository.getHistiry();
 	}
 
 	//DBに登録済みの支出情報をspendidを元に取り出す

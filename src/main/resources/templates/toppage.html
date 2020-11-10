@@ -22,7 +22,7 @@
 	</header>
 
 	<div class="main">
-	<div class="box">
+	<!-- <div class="box">
 		<div>
 			<h3>今日の運勢コーナー</h3>
 		</div>
@@ -32,8 +32,11 @@
 		</select>
 		<button type="button" id="fortuneButton">決定</button>
 		<div id="fortuneArea">
+			※使用しているAPIのプロトコルが「http」のため、開発環境でのみ動作します
 		</div>
-	</div>
+		powerd by <a href="http://jugemkey.jp/api/waf/api_free.php">JugemKey</a>
+		【PR】<a href="http://www.tarim.co.jp/">原宿占い館 塔里木</a>
+	</div> -->
 	<div class="boxtop" id="topleft">
 		<div><h3>貯金状況</h3></div>
 		<div th:if="${session.loginItem.savingStatus eq 2}" id="success">目標貯金額達成！！</div>
