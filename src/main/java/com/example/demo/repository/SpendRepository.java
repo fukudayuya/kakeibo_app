@@ -70,9 +70,10 @@ public class SpendRepository {
 	}
 
 	//直近30件の支出履歴を取得
-	public List<HistoryData> getHistiry(){
-		String sql = "select title from spend where userid = 2 order by spendid DESC limit 30";
-		List<HistoryData> historydata = jdbc.query(sql, getHistoryRowMapper);
+	public List<HistoryData> getHistiry(int id){
+		String sql = "select title from spend where userid = :userid order by spendid DESC limit 30";
+		SqlParameterSource param = new MapSqlParameterSource().addValue("userid", id);
+		List<HistoryData> historydata = jdbc.query(sql, param, getHistoryRowMapper);
 		return historydata;
 	}
 

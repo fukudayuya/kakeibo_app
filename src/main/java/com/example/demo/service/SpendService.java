@@ -42,8 +42,8 @@ public class SpendService {
 	}
 
 	//履歴情報の習得
-	public List<HistoryData> getHistory(){
-		return repository.getHistiry();
+	public List<HistoryData> getHistory(int id){
+		return repository.getHistiry(id);
 	}
 
 	//DBに登録済みの支出情報をspendidを元に取り出す

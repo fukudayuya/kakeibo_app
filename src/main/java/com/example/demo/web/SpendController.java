@@ -82,7 +82,7 @@ public class SpendController {
 		List<autoSpendInfo> AutoSpendList = new ArrayList<>();
 
 		//登録履歴の取得
-		List<HistoryData> historyData = service.getHistory();
+		List<HistoryData> historyData = service.getHistory(loginItem.getUserid());
 		//リストの値と出現個数を取得
 		Map<HistoryData, Long> counts = historyData.stream().collect(Collectors.groupingBy(Function.identity(),Collectors.counting()));
 		//出現回数順に並び替え
@@ -94,7 +94,14 @@ public class SpendController {
 
 		List<HistoryData> souseList = new ArrayList<>(sortcounts.keySet());//MapをListに変換。個数の少ない順で並んでいる。
 		Collections.reverse(souseList);
-		List<HistoryData> subSouseList = souseList.subList(0, 8);
+		int index = 0;
+		if(souseList.size() < 8) {
+			index = souseList.size();
+		}else {
+			index = 8;
+		}
+
+		List<HistoryData> subSouseList = souseList.subList(0, index);
 
 		System.out.println("履歴個数確認:"+ souseList);
 		System.out.println("履歴個数絞り込み:"+ subSouseList);
@@ -182,8 +189,7 @@ public class SpendController {
 			if(loginItem == null) {
 				return "redirect:/login/";
 			}
-			System.out.println(form.getSpenddate());
-			System.out.println("/spend/addcomplete2");
+
 			Date spenddate = null;
 			try {
 				SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
