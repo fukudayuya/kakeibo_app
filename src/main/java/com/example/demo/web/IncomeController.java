@@ -141,7 +141,7 @@ public class IncomeController {
 
 			service.IncomeAdd(income);
 
-			return "redirect:/top/";
+			return "redirect:/income/add";
 		}
 
 

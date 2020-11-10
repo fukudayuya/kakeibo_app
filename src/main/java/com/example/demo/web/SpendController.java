@@ -216,7 +216,7 @@ public class SpendController {
 			service.SpendAdd(spend);
 
 			System.out.println("/spend/addcomplete4");
-			return "redirect:/top/";
+			return "redirect:/spend/add";
 		}
 
 
