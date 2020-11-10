@@ -141,7 +141,7 @@ public class IncomeController {
 
 			service.IncomeAdd(income);
 
-			return "redirect:/income/add";
+			return "incomecomplete";
 		}
 
 
@@ -277,7 +277,7 @@ public class IncomeController {
 
 			service.IncomeUpdate(income);
 
-			return "redirect:/top/";
+			return "incomeeditcomplete";
 		}
 
 		//支出削除登録

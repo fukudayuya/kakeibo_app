@@ -180,7 +180,7 @@ public class SpendController {
 
 
 
-		//支出登録し、TOPへ遷移（アラート出したい）
+		//支出登録し、完了画面へ遷移
 		@RequestMapping("/addcomplete")
 		public String spend(SpendForm form) {
 			System.out.println("/spend/addcomplete");
@@ -216,7 +216,7 @@ public class SpendController {
 			service.SpendAdd(spend);
 
 			System.out.println("/spend/addcomplete4");
-			return "redirect:/spend/add";
+			return "spendcomplete";
 		}
 
 
@@ -412,7 +412,7 @@ public class SpendController {
 
 			service.SpendUpdate(spend);
 
-			return "redirect:/top/";
+			return "spendeditcomplete";
 		}
 
 		//支出削除登録

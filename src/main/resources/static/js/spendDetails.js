@@ -41,23 +41,7 @@ $(function(){
 		$('select[name=year] option[value=' + year +']').prop('selected',true);
 		$('select[name=month] option[value=' + month + ']').prop('selected',true);
 
-		//合計金額動的表示
-		//アクティブになっているpriceクラスをhtmlで取得
-		var $html = $('[aria-hidden="false"]').find('.price');
 
-		var totalPrice = 0;
-		var price = $html;
-
-		//priceはリストで取得されているので、for文で一つずつ取り出し合計をだす。
-		for(var i = 0;i < price.length;i++){
-
-			//値段のテキストのみを取得しint型にキャスト
-			var intprice = parseInt(price[i].textContent);
-			totalPrice += intprice;
-
-		}
-
-		$('#totalPrice').text(totalPrice);
 
 		//支出合計金額動的表示
 		var $totalhtml = $('.tabContents').find('.price');
@@ -126,10 +110,32 @@ $(function(){
 
 	$('#genremenu').selectmenu({
 		change: function(event,ui){
+
+
 			var val = $('select[name=genreselect]').val();
 			if (val == 'select') return;
 			$('section').fadeOut(0);
 			$('section#' + val ).fadeIn(0);
+
+			//合計金額動的表示
+			//アクティブになっているpriceクラスをhtmlで取得
+			var price = $('section#' + val).find('.price');
+
+			console.log("アクティブ値段:" + price[0].textContent);
+
+			var totalPrice = 0;
+
+			//priceはリストで取得されているので、for文で一つずつ取り出し合計をだす。
+			for(var i = 0;i < price.length;i++){
+
+				//値段のテキストのみを取得しint型にキャスト
+				var intprice = parseInt(price[i].textContent);
+				totalPrice += intprice;
+
+			}
+
+			$('#totalPrice'+val).text(totalPrice);
+
 		}
 	});
 
