@@ -18,9 +18,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.client.RestOperations;
 
-import com.example.demo.config.FortuneResource;
-import com.example.demo.domain.FortuneData;
-import com.example.demo.domain.FortuneSignData;
 import com.example.demo.domain.GetConfirm;
 import com.example.demo.domain.LoginItem;
 import com.example.demo.domain.SerchSaving;
@@ -64,22 +61,22 @@ public class TopController {
 		int year = today.getYear();
 		int month = today.getMonthValue();
 
-		String date = toStr(LocalDateTime.now(),"yyyy/MM/dd");//占う日付(今日)
-//		int sign = 0;//星座コード
-		FortuneResource resource = restOperations.getForObject("http://api.jugemkey.jp/api/horoscope/free/"+date, FortuneResource.class);
-		List<FortuneData> fortuneData = resource.getHoroscope().get(date);
-//		model.addAttribute("fortuneData",fortuneData);
-
-		List<FortuneSignData> signData = new ArrayList<>();//セレクトボックス用
-
-		for(int i = 0;i < 12;i++) {
-			FortuneSignData fortuneSigneData = new FortuneSignData();
-			fortuneSigneData.setSignvalue(i);
-			fortuneSigneData.setSign(fortuneData.get(i).getSign());
-			signData.add(fortuneSigneData);
-		}
-
-		model.addAttribute("signData",signData);
+//		String date = toStr(LocalDateTime.now(),"yyyy/MM/dd");//占う日付(今日)
+////		int sign = 0;//星座コード
+//		FortuneResource resource = restOperations.getForObject("http://api.jugemkey.jp/api/horoscope/free/"+date, FortuneResource.class);
+//		List<FortuneData> fortuneData = resource.getHoroscope().get(date);
+////		model.addAttribute("fortuneData",fortuneData);
+//
+//		List<FortuneSignData> signData = new ArrayList<>();//セレクトボックス用
+//
+//		for(int i = 0;i < 12;i++) {
+//			FortuneSignData fortuneSigneData = new FortuneSignData();
+//			fortuneSigneData.setSignvalue(i);
+//			fortuneSigneData.setSign(fortuneData.get(i).getSign());
+//			signData.add(fortuneSigneData);
+//		}
+//
+//		model.addAttribute("signData",signData);
 //
 //			System.out.println("json星座取れてる？:"+fortuneData.get(i).getSign());
 //		System.out.println("json取れてる？:"+fortuneData.get(0).);

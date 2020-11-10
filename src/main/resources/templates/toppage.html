@@ -171,8 +171,8 @@
 		<div id="price">当月の合計支出:<span th:text="${spendtotal.spendSumTotal}"></span>円</div>
 
 		<div>
-			<button onclick="location.href='/spend/add'" th:disabled="${confirmstatus.confirmStatus eq 1}"  id="button">支出登録</button></a>
-			<button onclick="location.href='/spend/details'"  th:disabled="${confirmstatus.confirmStatus eq 1}"  id="button">支出詳細・変更・削除</button></a>
+			<button onclick="location.href='/spend/add'" th:disabled="${confirmstatus.confirmStatus eq 1}"  id="button">支出登録</button>
+			<button onclick="location.href='/spend/details'"  th:disabled="${confirmstatus.confirmStatus eq 1}"  id="button">支出詳細・変更・削除</button>
 		</div>
 	</div>
 
