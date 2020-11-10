@@ -50,6 +50,7 @@
 				<td><span th:text="*{price}" class="price"></span>円</td>
 				<td><span th:text="*{contents}"></span></td>
 				<td>
+					<!-- 変数をURLにいれる際はプレースホルダを定義して、(プレースホルダ名= *{変数名}) -->
 					<form th:action="@{/spend/edit/{spendid}(spendid=*{spendid})}">
 						<input type="submit" th:value="編集" class="edit"/>
 					</form>

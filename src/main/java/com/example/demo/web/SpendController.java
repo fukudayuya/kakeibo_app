@@ -378,7 +378,7 @@ public class SpendController {
 			model.addAttribute("findTargetSpend",findTargetSpend);
 
 
-			return "spendEdit";
+			return "SpendEdit";
 		}
 
 		//支出編集登録
