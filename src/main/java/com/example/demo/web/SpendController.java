@@ -377,6 +377,101 @@ public class SpendController {
 			FindSpend findTargetSpend = service.getTargetSpend(spendid, userid);
 			model.addAttribute("findTargetSpend",findTargetSpend);
 
+			List<autoSpendInfo> AutoSpendList = new ArrayList<>();
+
+			//登録履歴の取得
+			List<HistoryData> historyData = service.getHistory(loginItem.getUserid());
+			//リストの値と出現個数を取得
+			Map<HistoryData, Long> counts = historyData.stream().collect(Collectors.groupingBy(Function.identity(),Collectors.counting()));
+			//出現回数順に並び替え
+			Map<HistoryData, Long> sortcounts = new HashMap<>();
+			sortcounts = sortMapByValue(counts);//sortMapByValueで並び替え
+			for(Map.Entry<HistoryData, Long> entry : sortcounts.entrySet()) {
+				System.out.println("Key:" + entry.getKey() + ",value:" + entry.getValue());
+			}
+
+			List<HistoryData> souseList = new ArrayList<>(sortcounts.keySet());//MapをListに変換。個数の少ない順で並んでいる。
+			Collections.reverse(souseList);
+			int index = 0;
+			if(souseList.size() < 8) {
+				index = souseList.size();
+			}else {
+				index = 8;
+			}
+
+			List<HistoryData> subSouseList = souseList.subList(0, index);
+
+			System.out.println("履歴個数確認:"+ souseList);
+			System.out.println("履歴個数絞り込み:"+ subSouseList);
+
+			model.addAttribute("historyList", subSouseList);
+
+			//DBに番号1の支出自動登録情報があるか確認
+			autoSpendInfo AutoSpendInfo1 = new autoSpendInfo();
+			AutoSpendInfo1 = autoservice.getAutoSpend1(loginItem.getUserid());
+
+			if(AutoSpendInfo1 != null ) {
+				//中身があったらリストへへ
+				AutoSpendList.add(AutoSpendInfo1);
+			}else {
+				//データがない場合はステータスを1として新規登録
+				autoSpendInfo AutoSpendInfox = new autoSpendInfo();
+				AutoSpendList.add(AutoSpendInfox);
+			}
+
+			//DBに番号2の支出自動登録情報があるか確認
+			autoSpendInfo AutoSpendInfo2 = new autoSpendInfo();
+			AutoSpendInfo2 = autoservice.getAutoSpend2(loginItem.getUserid());
+
+			if(AutoSpendInfo2 != null ) {
+				//中身があったらリストへへ
+				AutoSpendList.add(AutoSpendInfo2);
+			}else {
+				//データがない場合はステータスを1として新規登録
+				autoSpendInfo AutoSpendInfo2x = new autoSpendInfo();
+				AutoSpendList.add(AutoSpendInfo2x);
+			}
+
+			//DBに番号3の支出自動登録情報があるか確認
+			autoSpendInfo AutoSpendInfo3 = new autoSpendInfo();
+			AutoSpendInfo3 = autoservice.getAutoSpend3(loginItem.getUserid());
+
+			if(AutoSpendInfo3 != null ) {
+				//中身があったらリストへへ
+				AutoSpendList.add(AutoSpendInfo3);
+			}else {
+				//データがない場合はステータスを1として新規登録
+				autoSpendInfo AutoSpendInfo3x = new autoSpendInfo();
+				AutoSpendList.add(AutoSpendInfo3x);
+			}
+
+			//DBに番号4の支出自動登録情報があるか確認
+			autoSpendInfo AutoSpendInfo4 = new autoSpendInfo();
+			AutoSpendInfo4 = autoservice.getAutoSpend4(loginItem.getUserid());
+
+			if(AutoSpendInfo4 != null ) {
+				//中身があったらリストへへ
+				AutoSpendList.add(AutoSpendInfo4);
+			}else {
+				//データがない場合はステータスを1として新規登録
+				autoSpendInfo AutoSpendInfo4x = new autoSpendInfo();
+				AutoSpendList.add(AutoSpendInfo4x);
+			}
+
+			//DBに番号5の支出自動登録情報があるか確認
+			autoSpendInfo AutoSpendInfo5 = new autoSpendInfo();
+			AutoSpendInfo5 = autoservice.getAutoSpend5(loginItem.getUserid());
+
+			if(AutoSpendInfo5 != null ) {
+				//中身があったらリストへへ
+				AutoSpendList.add(AutoSpendInfo5);
+			}else {
+				//データがない場合はステータスを1として新規登録
+				autoSpendInfo AutoSpendInfo5x = new autoSpendInfo();
+				AutoSpendList.add(AutoSpendInfo5x);
+			}
+
+			model.addAttribute("autospendlist",AutoSpendList);
 
 			return "SpendEdit";
 		}

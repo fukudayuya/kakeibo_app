@@ -55,8 +55,37 @@
 		<div id="alert" class="alert"></div>
 
 		<input type="button" th:value="戻る" onclick="history.back()">
+		<input type="button" th:value="自動登録" id="autobutton"/>
 		<input type="submit" th:value="変更" class="submit"/>
 	</form>
+	<!-- 自動登録ダイアログ部分 -->
+	<div id = "autodialog" title="自動入力情報選択" style="display:none;">
+		<h3>収入登録リスト</h3>
+		<table border="1">
+			<tr>
+				<th>ジャンル</th>
+				<th>題目</th>
+				<th>金額</th>
+				<th>内容</th>
+				<th>ボタン</th>
+			</tr>
+
+			<tr th:each="list : ${autoincomelist}" th:object="${list}">
+				<td>
+				<select disabled>
+					<option th:each="genre : ${genreList}" th:value="${genre.incomegenreid}" th:text="${genre.incomegenrename}" th:selected="*{incomegenreid} == ${genre.incomegenreid}">
+				</select>
+				</td>
+				<td><span th:text="*{title}"></span></td>
+				<td><span th:text="*{price}" class="price"></span></td>
+				<td><span th:text="*{contents}"></span></td>
+				<td>
+				<input type="button" th:value="登録" class="autopush"/>
+				</td>
+			</tr>
+
+		</table>
+	</div>
 	</div>
 	</div>
 </body>

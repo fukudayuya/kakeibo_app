@@ -244,6 +244,51 @@ public class IncomeController {
 			FindIncome findTargetIncome = service.getTargetIncome(incomeid, userid);
 			model.addAttribute("findTargetIncome",findTargetIncome);
 
+			List<autoIncomeInfo> AutoIncomeList = new ArrayList<>();
+
+			//DBに番号1の収入自動登録情報があるか確認
+			autoIncomeInfo AutoIncomeInfo1 = new autoIncomeInfo();
+			AutoIncomeInfo1 = autoservice.getAutoIncome(loginItem.getUserid());
+
+				if(AutoIncomeInfo1 != null ) {
+					//中身があったらまとめてリストへ
+					AutoIncomeList.add(AutoIncomeInfo1);
+				}else {
+					//データがない場合はステータスを1として新規登録
+					autoIncomeInfo AutoIncomeInfox = new autoIncomeInfo();
+					AutoIncomeList.add(AutoIncomeInfox);
+				}
+
+			//DBに番号2の収入自動登録情報があるか確認
+			autoIncomeInfo AutoIncomeInfo2 = new autoIncomeInfo();
+			AutoIncomeInfo2 = autoservice.getAutoIncome2(loginItem.getUserid());
+
+				if(AutoIncomeInfo2 != null ) {
+					//中身があったらモデルスコープへ
+					AutoIncomeList.add(AutoIncomeInfo2);
+				}else {
+					//データがない場合はステータスを1として新規登録
+					autoIncomeInfo AutoIncomeInfo2x = new autoIncomeInfo();
+					AutoIncomeList.add(AutoIncomeInfo2x);
+				}
+
+			//DBに番号3の収入自動登録情報があるか確認
+			autoIncomeInfo AutoIncomeInfo3 = new autoIncomeInfo();
+			AutoIncomeInfo3 = autoservice.getAutoIncome3(loginItem.getUserid());
+
+				if(AutoIncomeInfo3 != null ) {
+					//中身があったらモデルスコープへ
+					System.out.println("AutoIncome3へイン");
+					AutoIncomeList.add(AutoIncomeInfo3);
+				}else {
+					//データがない場合はステータスを1として新規登録
+					autoIncomeInfo AutoIncomeInfo3x = new autoIncomeInfo();
+					AutoIncomeList.add(AutoIncomeInfo3x);
+				}
+
+			//ダイアログで表示するデータ
+			model.addAttribute("autoincomelist",AutoIncomeList);
+
 
 			return "IncomeEdit";
 		}
