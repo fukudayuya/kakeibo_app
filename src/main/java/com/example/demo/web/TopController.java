@@ -16,7 +16,6 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.client.RestOperations;
 
 import com.example.demo.domain.GetConfirm;
 import com.example.demo.domain.LoginItem;
@@ -37,7 +36,7 @@ public class TopController {
 	private TopService service;
 
 	@Autowired
-	private RestOperations restOperations;
+//	private RestOperations restOperations;
 
 	public static String toStr(LocalDateTime localDateTime,String format) {
 		DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(format);
@@ -129,10 +128,53 @@ public class TopController {
 		String spendlabel[] = label.toArray(new String[label.size()]);
 		model.addAttribute("label", spendlabel);
 
-		//支出グラフのデータを取得
+		//当月支出グラフのデータを取得
 		List<Integer> data = service.spendData(userid, yearMonth, yearMonth2);
 		Integer spendData[] = data.toArray(new Integer[data.size()]);
 		model.addAttribute("data", spendData);
+		String serchDateData = year + "年" + month + "月";
+		model.addAttribute("DateData",serchDateData);//棒グラフ用の当月情報
+
+		//前月支出グラフのデータを取得
+
+		if( month == 1) {
+			String lastMonth = year-1 + "-" + "12" + "-" + "01";
+			String lastMonth2 = year-1 + "-" + "12" + "-" + "31";
+
+			try {
+				Date lastYearMonth = sdf.parse(lastMonth);
+				Date lastYearMonth2 = sdf.parse(lastMonth2);
+
+				List<Integer> lastMonthdata = service.spendData(userid, lastYearMonth, lastYearMonth2);
+				Integer lastMonthspendData[] = lastMonthdata.toArray(new Integer[data.size()]);
+
+				String dateData = year-1+ "年" + "12月";
+
+				model.addAttribute("lastMonthdata", lastMonthspendData);
+				model.addAttribute("LastDateData", dateData);//棒グラフ用の前月日付データ
+
+			}catch(ParseException e) {
+				System.out.println(e);
+			}
+		}else {
+			int lastmonth = month - 1;
+			String lastMonth = year + "-" + lastmonth + "-" + "01";
+			String lastMonth2 = year + "-" + lastmonth + "-" + "31";
+
+			try {
+				Date LastMonth = sdf.parse(lastMonth);
+				Date LastMonth2 = sdf.parse(lastMonth2);
+
+				List<Integer> lastMonthdata = service.spendData(userid, LastMonth, LastMonth2);
+				Integer lastMonthspendData[] = lastMonthdata.toArray(new Integer[data.size()]);
+				model.addAttribute("lastMonthdata", lastMonthspendData);
+				String dateData = year + "年" + lastmonth + "月";
+				model.addAttribute("LastDateData", dateData);//棒グラフ用の前月日付データ
+			}catch(ParseException e) {
+				System.out.println(e);
+			}
+		}
+
 
 		//収支確定ステータスの取得
 		SimpleDateFormat sdfConfirm = new SimpleDateFormat("yyyy-MM");

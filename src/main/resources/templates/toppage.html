@@ -173,8 +173,58 @@
 		<div>
 			<button onclick="location.href='/spend/add'" th:disabled="${confirmstatus.confirmStatus eq 1}"  id="button">支出登録</button>
 			<button onclick="location.href='/spend/details'"  th:disabled="${confirmstatus.confirmStatus eq 1}"  id="button">支出詳細・変更・削除</button>
+			<button id="comparisionbutton">前月との比較</button>
 		</div>
 	</div>
+
+	<!-- ダイアログの前月比較ページ -->
+	<div id="comparisiondialog" title="前月比較" style="display:none;">
+		<p>前月との比較棒グラフ</p>
+		<canvas id = "comparisiongraf"></canvas>
+		<script type="text/javascript" th:inline="javascript">
+			var base = document.getElementById("comparisiongraf");
+			var barchart = new Chart(base,{
+				type:'bar',
+				data:{
+					labels:/*[[ ${label} ]]*/,
+					datasets:[
+						{
+							label:/*[[ ${LastDateData} ]]*/,
+							data:/*[[ ${lastMonthdata} ]]*/,
+							backgroundColor:"blue"
+						},
+						{
+							label:/*[[ ${DateData} ]]*/,
+							data:/*[[ ${data} ]]*/,
+							backgroundColor:"red"
+						}
+					]
+				},
+				options:{
+					title:{
+						display:true,
+						text:'前月比較棒グラフ'
+					},
+					scales:{
+						yAxes:[{/* y軸の設定 */
+							ticks:{
+								suggestedMax: 10000,/* グラフの最大値 */
+								suggestedMin: 0,/* グラフの最小値 */
+								stepSize: 1000,/* 刻み幅 */
+								callback: function(value, index, values){
+									return value + '円'
+								}
+							}
+						}]
+					}
+
+				}
+
+			})
+
+		</script>
+	</div>
+
 
 	<div class="box">
 		<div id="incomeList">

@@ -74,4 +74,17 @@ $(function(){
 
 	});
 
+	//前月比較ダイアログ表示
+	$("#comparisionbutton").click(function(){
+		$("#comparisiondialog").dialog({
+			modal: true,
+			width: 1050,
+			buttons:{
+				"閉じる":function(){
+					$(this).dialog("close");
+				}
+			}
+		});
+	});
+
 });
