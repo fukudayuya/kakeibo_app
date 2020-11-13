@@ -47,6 +47,23 @@ body{
 	margin-top:150px;
 }
 
+
+#selectYear-button{
+	width:12%;
+}
+
+#selectMonth-button{
+	width:12%;
+}
+
+#genremenu-button{
+	width:20%;
+}
+
+#genreserchmenu-button{
+	width:20%;
+}
+
 #tabs{
     position:static;
 }

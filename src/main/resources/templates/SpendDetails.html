@@ -25,13 +25,24 @@
 <div class="main">
 <div class="box">
 	<form th:action="@{/spend/details}" th:object="${FindSpendDateForm}">
-		<span id="year"></span><span id="month"></span><input type="submit" value="検索">
+		<select id="selectYear" name="year">
+			<option th:each="year : ${selectyear}" th:value="${year}" th:text="${year}" th:selected="${year} == ${selectedyear}"></option>
+		</select>年
+		<select id="selectMonth" name="month">
+			<option th:each="month : ${selectmonth}" th:value="${month}" th:text="${month}" th:selected="${month} == ${selectedmonth}"></option>
+		</select>月
+		<select name="genreselect" id="genremenu">
+			<option th:each="genre : ${genreList}" th:value="${genre.spendgenreid}" th:text="${genre.spendgenrename}" th:selected="${genre.spendgenreid} == ${selectedgenre}"></option>
+		</select>
+		<input type="submit" value="検索">
 	</form>
 
-	<select name="genreselect" id="genremenu">
-		<option th:value="0" th:text="選択してください"></option>
-		<option th:each="genre : ${genreList}" th:value="${genre.spendgenreid}" th:text="${genre.spendgenrename}"></option>
+	<p>
+	ジャンルのみ表示変更：
+	<select name="genreserchselect" id="genreserchmenu">
+		<option th:each="genre : ${genreList}" th:value="${genre.spendgenreid}" th:text="${genre.spendgenrename}" th:selected="${genre.spendgenreid} == ${selectedgenre}"></option>
 	</select>
+	</p>
 
 	<section class="tabContents" id="1">
 		<h3>食費</h3>

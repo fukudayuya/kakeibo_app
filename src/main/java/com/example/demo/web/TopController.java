@@ -81,10 +81,33 @@ public class TopController {
 //		System.out.println("json取れてる？:"+fortuneData.get(0).);
 
 
+		//検索の年月リスト作成
+		List<Integer> selectSerchYear = new ArrayList<>();
+		List<Integer> selectSerchMonth = new ArrayList<>();
+
+		for(int i = year; i < year+20; i++) {
+			selectSerchYear.add(i);
+		}
+
+		model.addAttribute("selectyear",selectSerchYear);
+
+		for(int i = 1; i< 13; i++) {
+			selectSerchMonth.add(i);
+		}
+		model.addAttribute("selectmonth",selectSerchMonth);
+
+		//検索前と検索後のセレクトボックスの表示切り替え
+
+
 		//top検索機能つけた際に使用
 		if(form.getYear() != 0 && form.getMonth() != 0 ) {
 			year = form.getYear();
 			month = form.getMonth();
+			model.addAttribute("selectedyear",year);
+			model.addAttribute("selectedmonth",month);
+		}else {
+			model.addAttribute("selectedyear",year);
+			model.addAttribute("selectedmonth",month);
 		}
 
 		TopYearMonth yearmonth = new TopYearMonth();

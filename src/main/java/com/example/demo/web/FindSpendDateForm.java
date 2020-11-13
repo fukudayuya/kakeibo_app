@@ -7,5 +7,6 @@ public class FindSpendDateForm {
 
 	private int year;
 	private int month;
+	private int genreselect;
 
 }

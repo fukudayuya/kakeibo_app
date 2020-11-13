@@ -8,37 +8,6 @@ $(function(){
 
 	$(window).on('load',function(){
 
-		//年月プルダウン作成
-		var todaydate = new Date();
-
-		var year = todaydate.getFullYear();
-		var month = todaydate.getMonth() + 1;
-
-		//「年」プルダウン生成
-		$('#year').html('<select name="year"></select>');
-
-		//「年」プルダウンの中身を作成
-		for(i = 2018; i <= year+3; i++){
-			$('#year select').append('<option value=' + i + '>' + i +'</option>');
-		}
-
-		//id=yearの最後の要素に「年」を配置
-		$('#year').append('年');
-
-		//「月」プルダウンを作成
-		$('#month').html('<select name="month"></select>');
-
-		//「月」プルダウンの中身を作成
-		for(i = 1; i <= 12; i++){
-			$('#month select').append('<option value=' + i + '>'+ i +'</option>');
-		}
-
-		//id=monthの最後の要素に「月」を配置
-		$('#month').append('月');
-
-		//デフォルト表示
-		$('select[name=year] option[value=' + year +']').prop('selected',true);
-		$('select[name=month] option[value=' + month + ']').prop('selected',true);
 
 		//合計金額動的表示
 		//アクティブになっているpriceクラスをhtmlで取得

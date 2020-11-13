@@ -102,16 +102,14 @@
 
 	<div class="selectForm">
 	<form th:action="@{/top/}" th:object="${topSerchForm}" id="serchsubmit">
-		<div id="select">
 			<div class ="alert"></div>
-			<select id="selectYear" name="year" th:value="0">
-				<option>---</option>
+			<select id="selectYear" name="year">
+				<option th:each="year : ${selectyear}" th:value="${year}" th:text="${year}" th:selected="${year} == ${selectedyear}"></option>
 			</select>年
-			<select id="selectMonth" name="month" th:value="0">
-				<option>---</option>
+			<select id="selectMonth" name="month">
+				<option th:each="month : ${selectmonth}" th:value="${month}" th:text="${month}" th:selected="${month} == ${selectedmonth}"></option>
 			</select>月分
 			<button type="submit" id="button">検索</button>
-		</div>
 	</form>
 	</div>
 

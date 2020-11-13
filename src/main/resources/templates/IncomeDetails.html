@@ -24,8 +24,15 @@
 <div class="main">
 <div class="box">
 	<form th:action="@{/income/details}" th:object="${FindSpendDateForm}">
-		<span id="year"></span><span id="month"></span><input type="submit" value="検索">
+		<select id="selectYear" name="year">
+			<option th:each="year : ${selectyear}" th:value="${year}" th:text="${year}" th:selected="${year} == ${selectedyear}"></option>
+		</select>年
+		<select id="selectMonth" name="month">
+			<option th:each="month : ${selectmonth}" th:value="${month}" th:text="${month}" th:selected="${month} == ${selectedmonth}"></option>
+		</select>月
+		<input type="submit" value="検索">
 	</form>
+	<p>
 	<div id="tabs">
 	<ul class="tab">
 		<li><a th:href="@{#salary}" class="link">給与</a></li>

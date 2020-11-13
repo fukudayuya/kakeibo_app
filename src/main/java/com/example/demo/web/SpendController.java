@@ -237,9 +237,30 @@ public class SpendController {
 			int year = today.getYear();
 			int month = today.getMonthValue();
 
+			//検索の年月リスト作成
+			List<Integer> selectSerchYear = new ArrayList<>();
+			List<Integer> selectSerchMonth = new ArrayList<>();
+
+			for(int i = year; i < year+20; i++) {
+				selectSerchYear.add(i);
+			}
+			model.addAttribute("selectyear",selectSerchYear);
+
+			for(int i = 1; i< 13; i++) {
+				selectSerchMonth.add(i);
+			}
+			model.addAttribute("selectmonth",selectSerchMonth);
+
 			if(form.getYear() != 0 && form.getMonth() != 0 ) {
 				year = form.getYear();
 				month = form.getMonth();
+				model.addAttribute("selectedyear",year);
+				model.addAttribute("selectedmonth",month);
+				model.addAttribute("selectedgenre",form.getGenreselect());
+			}else {
+				model.addAttribute("selectedyear",year);
+				model.addAttribute("selectedmonth",month);
+				model.addAttribute("selectedgenre",1);
 			}
 
 			String find1 = year + "-" + month + "-" + "01";
