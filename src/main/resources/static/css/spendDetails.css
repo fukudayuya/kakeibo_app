@@ -50,14 +50,17 @@ body{
 
 #selectYear-button{
 	width:12%;
+	position:static;
 }
 
 #selectMonth-button{
 	width:12%;
+	position:static;
 }
 
 #genremenu-button{
 	width:20%;
+	position:static;
 }
 
 #genreserchmenu-button{

@@ -29,6 +29,10 @@ body{
  margin: 10px;
 }
 
+#genreid-button{
+    position:static;
+}
+
 #inlineblock button{
 	display: inline-block;
 	vertical-align: middle;
@@ -38,6 +42,19 @@ body{
     position:static;
 }
 #ui-id-1-button{
+	position:static;
+}
+#ui-id-2-button{
+	position:static;
+}
+
+#ui-id-3-button{
+	position:static;
+}
+#ui-id-4-button{
+	position:static;
+}
+.submit.ui-button{
 	position:static;
 }
 span.ui-icon{

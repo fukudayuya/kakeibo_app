@@ -4,7 +4,7 @@ $(function(){
 	$("#toplink").button();
 	$("button").button();
 	$("#tabs").tabs();
-
+	$("select").selectmenu();
 
 
 	$(window).on('load',function(){
@@ -44,7 +44,7 @@ $(function(){
 		}
 		$("#spendTotal").html('<span>'+spendTotalPrice+'円</span>');
 
-		$("select").selectmenu();
+
 	});
 
 
