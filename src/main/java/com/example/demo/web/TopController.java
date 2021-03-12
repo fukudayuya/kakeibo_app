@@ -85,7 +85,7 @@ public class TopController {
 		List<Integer> selectSerchYear = new ArrayList<>();
 		List<Integer> selectSerchMonth = new ArrayList<>();
 
-		for(int i = year; i < year+20; i++) {
+		for(int i = 2020; i < year+20; i++) {
 			selectSerchYear.add(i);
 		}
 
